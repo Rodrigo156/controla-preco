@@ -20,22 +20,18 @@
 			<p:panel header="Produto"
 				style="margin-left: 24%; margin-right: 24%;">
 
-				<p:dataTable var="item" value="#{produtoBean.produtos}"
+				<p:dataTable var="item" value="#{controladorProduto.produtos}"
 					id="tabelaProdutos">
 					<p:column headerText="Nome">
 						<h:outputText value="#{item.nome}" />
-					</p:column>
-					<p:column headerText="Preço">
-						<h:outputText value="#{item.preco}">
-							<f:convertNumber locale="pt_BR" type="currency" />
-						</h:outputText>
 					</p:column>
 					<p:column headerText="Categoria">
 						<h:outputText value="#{item.categoria.nome}" />
 					</p:column>
 					<p:column style="width: 50px;">
-						<p:commandButton type="submit" icon="ui-icon-pencil" />
-						<p:commandButton type="submit" icon="ui-icon-trash" />
+						<p:commandButton icon="ui-icon-pencil"
+							action="#{controladorProduto.editar(item)}" />
+						<p:commandButton icon="ui-icon-trash" />
 					</p:column>
 				</p:dataTable>
 

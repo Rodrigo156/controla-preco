@@ -14,7 +14,7 @@ public class ItemCompra {
     private Compra compra;
     private Double valor;
     @ManyToOne
-    private Item item;
+    private Produto item;
 
     public Long getId() {
         return id;
@@ -40,11 +40,11 @@ public class ItemCompra {
         this.valor = valor;
     }
 
-    public Item getItem() {
+    public Produto getItem() {
         return item;
     }
 
-    public void setItem(Item item) {
+    public void setItem(Produto item) {
         this.item = item;
     }
 }

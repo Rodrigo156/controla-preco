@@ -4,13 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Item {
+public class Produto {
     @Id
     @GeneratedValue
     private Long id;
     private String nome;
+    @ManyToOne
+    private Categoria categoria;
     @Lob
     private byte[] imagem;
 
@@ -36,5 +39,13 @@ public class Item {
 
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
     }
 }

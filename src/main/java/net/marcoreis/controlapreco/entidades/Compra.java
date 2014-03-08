@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Compra {
+public class Compra implements IPersistente {
     @Id
     @GeneratedValue
     private Long id;

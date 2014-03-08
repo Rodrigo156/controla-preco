@@ -23,39 +23,22 @@
 				<p:panelGrid columns="2">
 
 					<p:outputLabel value="ID:" />
-					<p:inputText value="#{produtoBean.produto.id}" disabled="true" />
+					<p:inputText value="#{controladorProduto.produto.id}"
+						disabled="true" />
 
 					<p:outputLabel value="Nome:" />
-					<p:inputText value="#{produtoBean.produto.nome}" />
-
-					<p:outputLabel value="Preço (R$):" />
-					<p:inputText value="#{produtoBean.produto.preco}">
-						<f:convertNumber locale="pt_BR" />
-					</p:inputText>
-
-					<p:outputLabel value="Descrição:" />
-					<p:inputTextarea value="#{produtoBean.produto.descricao}" />
-
-					<p:outputLabel value="Especificação da loja" />
-					<p:editor value="#{produtoBean.produto.especificacaoLoja}" />
+					<p:inputText value="#{controladorProduto.produto}" />
 
 					<p:outputLabel value="Especificação do fabricante" />
-					<p:fileUpload value="#{produtoBean.especificacaoFabricante}"
-						mode="simple" />
-
-					<p:outputLabel value="Categoria:" />
-					<p:selectOneMenu value="#{produtoBean.produto.categoria.id}">
-						<f:selectItems value="#{categoriaBean.categorias}" var="item"
-							itemLabel="#{item.nome}" itemValue="#{item.id}" />
-					</p:selectOneMenu>
+					<p:fileUpload value="#{controladorProduto.imagem}" mode="simple" />
 
 				</p:panelGrid>
 
 				<p:spacer height="6px" />
 
 				<f:facet name="footer">
-					<p:commandButton value="Salvar" ajax="false"
-						actionListener="#{produtoBean.salvar}" icon="ui-icon-disk" />
+					<p:commandButton value="Salvar"
+						actionListener="#{categoriaProduto.salvar}" icon="ui-icon-disk" />
 					<p:commandButton value="Voltar" type="submit"
 						action="produtos?faces-redirect=true" ajax="false"
 						icon="ui-icon-arrowreturnthick-1-w" />
