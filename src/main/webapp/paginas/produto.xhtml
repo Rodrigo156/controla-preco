@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="comum/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<p:messages id="messages" />
+
+			<p:spacer height="3px" />
+
+			<p:panel header="Produto"
+				style="margin-left: 24%; margin-right: 24%;">
+
+				<p:panelGrid columns="2">
+
+					<p:outputLabel value="ID:" />
+					<p:inputText value="#{produtoBean.produto.id}" disabled="true" />
+
+					<p:outputLabel value="Nome:" />
+					<p:inputText value="#{produtoBean.produto.nome}" />
+
+					<p:outputLabel value="Preço (R$):" />
+					<p:inputText value="#{produtoBean.produto.preco}">
+						<f:convertNumber locale="pt_BR" />
+					</p:inputText>
+
+					<p:outputLabel value="Descrição:" />
+					<p:inputTextarea value="#{produtoBean.produto.descricao}" />
+
+					<p:outputLabel value="Especificação da loja" />
+					<p:editor value="#{produtoBean.produto.especificacaoLoja}" />
+
+					<p:outputLabel value="Especificação do fabricante" />
+					<p:fileUpload value="#{produtoBean.especificacaoFabricante}"
+						mode="simple" />
+
+					<p:outputLabel value="Categoria:" />
+					<p:selectOneMenu value="#{produtoBean.produto.categoria.id}">
+						<f:selectItems value="#{categoriaBean.categorias}" var="item"
+							itemLabel="#{item.nome}" itemValue="#{item.id}" />
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+
+				<p:spacer height="6px" />
+
+				<f:facet name="footer">
+					<p:commandButton value="Salvar" ajax="false"
+						actionListener="#{produtoBean.salvar}" icon="ui-icon-disk" />
+					<p:commandButton value="Voltar" type="submit"
+						action="produtos?faces-redirect=true" ajax="false"
+						icon="ui-icon-arrowreturnthick-1-w" />
+				</f:facet>
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>
