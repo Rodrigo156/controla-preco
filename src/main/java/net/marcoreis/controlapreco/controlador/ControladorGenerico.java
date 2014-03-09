@@ -12,7 +12,8 @@ import org.apache.log4j.Logger;
 
 public class ControladorGenerico implements Serializable {
     private static final long serialVersionUID = -5895396595360064610L;
-    protected static final Logger logger = Logger.getLogger(ControladorGenerico.class);
+    protected static final Logger logger = Logger
+            .getLogger(ControladorGenerico.class);
     protected String MENSAGEM_SUCESSO = "Dados gravados com sucesso";
     protected String MENSAGEM_ERRO = "Não foi possível gravar";
     private Usuario usuario;
@@ -48,6 +49,11 @@ public class ControladorGenerico implements Serializable {
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 message, "Erro");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public String getParametro(String nome) {
+        return FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestParameterMap().get(nome);
     }
 
 }

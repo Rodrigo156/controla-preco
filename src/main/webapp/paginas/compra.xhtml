@@ -17,8 +17,7 @@
 
 			<p:spacer height="3px" />
 
-			<p:panel header="Produto"
-				style="margin-left: 24%; margin-right: 24%;">
+			<p:panel header="Compra" style="margin-left: 24%; margin-right: 24%;">
 
 				<h:inputHidden value="#{controladorCompra.compra.id}" />
 
@@ -34,16 +33,96 @@
 						<f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
 					</p:inputMask>
 
+					<p:outputLabel value="Estabelecimento:" />
+					<p:autoComplete value="#{controladorCompra.compra.estabelecimento}"
+						completeMethod="#{controladorCompra.completarEstabelecimento}"
+						converter="conversorEstabelecimento" itemLabel="#{item.nome}"
+						size="60" dropdown="true" itemValue="#{item}" var="item" />
 				</p:panelGrid>
+
+				<p:spacer height="6px" />
+
+				<p:panelGrid columns="2" id="gradeProduto">
+					<p:outputLabel value="Produto:" />
+					<p:autoComplete value="#{controladorCompra.produtoSelecionado}"
+						completeMethod="#{controladorCompra.completarProduto}"
+						converter="conversorProduto" itemLabel="#{item.nome}" size="60"
+						dropdown="true" itemValue="#{item}" var="item" />
+
+					<p:outputLabel value="Preço unitário:" />
+					<p:inputText value="#{controladorCompra.valorUnitario}"
+						required="true" label="Preço unitário">
+						<f:convertNumber locale="pt_BR" />
+					</p:inputText>
+
+					<p:outputLabel value="Quantidade:" />
+					<p:inputText value="#{controladorCompra.quantidade}">
+						<f:convertNumber locale="pt_BR" maxFractionDigits="2" />
+					</p:inputText>
+
+					<f:facet name="footer">
+						<p:commandButton action="#{controladorCompra.adicionarItem}"
+							icon="ui-icon-circle-plus"
+							update="tabelaItens,txtId,gradeProduto" />
+					</f:facet>
+
+				</p:panelGrid>
+
+
+				<p:spacer height="6px" />
+
+				<p:dataTable value="#{controladorCompra.itens}" var="item"
+					id="tabelaItens">
+
+					<f:facet name="header">
+						<p:outputLabel>Itens</p:outputLabel>
+					</f:facet>
+
+					<p:column headerText="Produto" sortBy="#{item.produto.nome}">
+						<h:outputText value="#{item.produto.nome}" />
+					</p:column>
+					<p:column headerText="Valor" style="text-align:center;"
+						sortBy="#{item.valorUnitario}">
+						<h:outputText value="#{item.valorUnitario}">
+							<f:convertNumber locale="pt_BR" type="currency" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Quantidade" style="text-align:center;"
+						sortBy="#{item.quantidade}">
+						<h:outputText value="#{item.quantidade}">
+							<f:convertNumber locale="pt_BR" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Total" style="text-align:center;"
+						sortBy="#{item.valorTotal}">
+						<h:outputText value="#{item.valorTotal}">
+							<f:convertNumber locale="pt_BR" type="currency" />
+						</h:outputText>
+					</p:column>
+					<p:column style="width: 50px;">
+						<p:commandButton icon="ui-icon-trash" immediate="true"
+							actionListener="#{controladorCompra.removerItem(item)}"
+							update="tabelaItens" />
+					</p:column>
+
+					<p:columnGroup type="footer">
+						<p:row>
+							<p:column colspan="5"
+								footerText="#{controladorCompra.valorTotalFormatado}"
+								style="text-align:right" />
+						</p:row>
+					</p:columnGroup>
+
+				</p:dataTable>
 
 				<p:spacer height="6px" />
 
 				<f:facet name="footer">
 					<p:commandButton value="Salvar"
-						actionListener="#{controladorProduto.salvar}" icon="ui-icon-disk"
-						update="messages,txtId" />
+						actionListener="#{controladorCompra.salvar}" icon="ui-icon-disk"
+						update="messages,txtId" rendered="false" />
 					<p:commandButton value="Voltar" type="submit" immediate="true"
-						action="produtos?faces-redirect=true" ajax="false"
+						action="compras?faces-redirect=true" ajax="false"
 						icon="ui-icon-arrowreturnthick-1-w" />
 				</f:facet>
 			</p:panel>

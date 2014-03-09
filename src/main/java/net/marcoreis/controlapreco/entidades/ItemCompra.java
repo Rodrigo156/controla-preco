@@ -1,20 +1,23 @@
 package net.marcoreis.controlapreco.entidades;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class ItemCompra {
+public class ItemCompra implements IPersistente {
     @Id
     @GeneratedValue
     private Long id;
     @ManyToOne
     private Compra compra;
-    private Double valor;
+    private Double quantidade;
+    private Double valorUnitario;
+    private Double valorTotal;
     @ManyToOne
-    private Produto item;
+    private Produto produto;
 
     public Long getId() {
         return id;
@@ -32,19 +35,36 @@ public class ItemCompra {
         this.compra = compra;
     }
 
-    public Double getValor() {
-        return valor;
+    public void setValorTotal(Double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    public void setValorUnitario(Double valorUnitario) {
+        this.valorUnitario = valorUnitario;
     }
 
-    public Produto getItem() {
-        return item;
+    public Double getValorTotal() {
+        return valorTotal;
     }
 
-    public void setItem(Produto item) {
-        this.item = item;
+    public Double getValorUnitario() {
+        return valorUnitario;
     }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public void setQuantidade(Double quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public Double getQuantidade() {
+        return quantidade;
+    }
+
 }
