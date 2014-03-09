@@ -8,6 +8,8 @@
 <c:set var="ctx"
 	value="#{facesContext.externalContext.request.contextPath}" />
 
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+
 <h:head>
 	<link href="${ctx}/paginas/comum/estilo/geral.css" type="text/css"
 		rel="stylesheet" />
@@ -35,7 +37,8 @@
 		<div id="footer">
 			<ui:insert name="rodape">
 				<p:panel>
-					<p:outputLabel rendered="#{not empty controladorLogin.usuario.email}"
+					<p:outputLabel
+						rendered="#{not empty controladorLogin.usuario.email}"
 						value="#{loginBean.usuario.nome} (#{controladorLogin.usuario.email})" />
 					<p:outputLabel rendered="#{empty controladorLogin.usuario.email}"
 						value="Nenhum usuário selecionado" />

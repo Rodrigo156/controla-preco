@@ -48,4 +48,12 @@ public class Produto implements IPersistente {
     public Categoria getCategoria() {
         return categoria;
     }
+
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        Produto other = (Produto) obj;
+        return other.getId() == getId();
+    }
+
 }

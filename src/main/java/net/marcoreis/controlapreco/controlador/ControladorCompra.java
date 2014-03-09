@@ -3,7 +3,6 @@ package net.marcoreis.controlapreco.controlador;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -13,10 +12,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import net.marcoreis.controlapreco.entidades.Compra;
+import net.marcoreis.controlapreco.entidades.Estabelecimento;
 import net.marcoreis.controlapreco.entidades.ItemCompra;
 import net.marcoreis.controlapreco.entidades.Produto;
 
 import org.apache.commons.lang.StringUtils;
+import org.primefaces.event.SelectEvent;
 
 @ManagedBean
 @ViewScoped
@@ -30,6 +31,7 @@ public class ControladorCompra extends ControladorGenerico {
     private Double valorUnitario;
     private Double valorTotal = 0d;
     private Double quantidade = 1d;
+    private List<Estabelecimento> estabelecimentos;
 
     @PostConstruct
     public void init() {
@@ -42,6 +44,7 @@ public class ControladorCompra extends ControladorGenerico {
             compra = new Compra();
             compra.setData(new Date(System.currentTimeMillis()));
         }
+        estabelecimentos = getServico().findAll(Estabelecimento.class);
         compras = getServico().findAll(Compra.class);
     }
 
@@ -100,6 +103,16 @@ public class ControladorCompra extends ControladorGenerico {
 
     public List<Produto> completarEstabelecimento(String query) {
         return getServico().findEstabelecimentosPorNome(query);
+    }
+
+    public void handleSelect(SelectEvent event) {
+        try {
+            Estabelecimento estabelecimento = (Estabelecimento) event
+                    .getObject();
+            getCompra().setEstabelecimento(estabelecimento);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setValorUnitario(Double valorUnitario) {
@@ -196,5 +209,9 @@ public class ControladorCompra extends ControladorGenerico {
         DecimalFormat df = new DecimalFormat("R$ ###0.00",
                 new DecimalFormatSymbols(new Locale("pt", "BR")));
         return df.format(getValorTotal());
+    }
+
+    public List<Estabelecimento> getEstabelecimentos() {
+        return estabelecimentos;
     }
 }

@@ -53,4 +53,11 @@ public class Estabelecimento implements IPersistente {
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
+
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        Estabelecimento other = (Estabelecimento) obj;
+        return other.getId() == getId();
+    }
 }

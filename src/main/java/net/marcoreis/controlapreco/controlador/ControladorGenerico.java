@@ -16,6 +16,7 @@ public class ControladorGenerico implements Serializable {
             .getLogger(ControladorGenerico.class);
     protected String MENSAGEM_SUCESSO = "Dados gravados com sucesso";
     protected String MENSAGEM_ERRO = "Não foi possível gravar";
+    protected static final String LOGIN_INVALIDO = "Usuário inválido";
     private Usuario usuario;
 
     @PostConstruct

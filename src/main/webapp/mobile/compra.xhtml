@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+
+<h:body>
+	<pm:page id="first" title="Compra">
+		<pm:header title="Compra" theme="b"></pm:header>
+
+		<pm:content>
+			<h:form>
+
+				<p:growl id="messages" />
+
+				<h:inputHidden value="#{controladorCompra.compra.id}" id="hiddenId" />
+
+				<p>ID</p>
+				<p:inputText value="#{controladorCompra.compra.id}" id="txtId"
+					disabled="true" />
+
+				<p:outputLabel value="Data" />
+				<p:inputMask value="#{controladorCompra.compra.data}"
+					mask="99/99/9999 99:99">
+					<f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+				</p:inputMask>
+
+				<p>Estabelecimento</p>
+				<h:selectOneMenu value="#{controladorCompra.compra.estabelecimento}"
+					converter="conversorEstabelecimento" label="Estabelecimento"
+					required="true" requiredMessage="Selecione o estabelecimento">
+					<f:selectItems
+						value="#{controladorEstabelecimento.estabelecimentos}" var="item"
+						itemLabel="#{item.nome}" />
+				</h:selectOneMenu>
+
+				<p>Produto</p>
+				<h:selectOneMenu value="#{controladorCompra.produtoSelecionado}"
+					id="comboProduto" converter="conversorProduto" label="Produto"
+					required="true">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{controladorProduto.produtos}" var="item"
+						itemLabel="#{item.nome}" itemValue="#{item}" />
+				</h:selectOneMenu>
+
+				<p>Valor unitário</p>
+				<h:inputText value="#{controladorCompra.valorUnitario}"
+					id="txtValorUnitario" required="true" label="Valor unitário">
+					<f:convertNumber locale="pt_BR" />
+				</h:inputText>
+
+				<p:outputLabel value="Quantidade" />
+				<p:inputText value="#{controladorCompra.quantidade}"
+					id="txtQuantidade">
+					<f:convertNumber locale="pt_BR" maxFractionDigits="3" />
+				</p:inputText>
+
+				<p:commandButton action="#{controladorCompra.adicionarItem}"
+					value="Adicionar"
+					update="messages,tabelaItens,txtId,hiddenId,txtValorUnitario,comboProduto,txtQuantidade"
+					icon="plus" styleClass="ui-btn-inline" />
+
+				<p:spacer height="6px" />
+
+				<p:dataList value="#{controladorCompra.itens}" var="item"
+					id="tabelaItens" type="inset">
+					<f:facet name="header">Itens</f:facet>
+					<p>#{item.produto.nome}</p>
+					<p>
+						<strong>#{item.valorTotal}</strong>
+					</p>
+					<f:facet name="footer">Total: #{controladorCompra.valorTotalFormatado}</f:facet>
+				</p:dataList>
+
+				<p:commandButton action="compras?faces-redirect=true" value="Voltar"
+					icon="arrow-l" ajax="false" immediate="true"
+					styleClass="ui-btn-inline" />
+
+			</h:form>
+		</pm:content>
+	</pm:page>
+</h:body>
+</html>

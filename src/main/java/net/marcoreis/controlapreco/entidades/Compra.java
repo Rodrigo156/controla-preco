@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Compra implements IPersistente {
@@ -14,6 +16,7 @@ public class Compra implements IPersistente {
     private Long id;
     @ManyToOne
     private Estabelecimento estabelecimento;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date data;
     private Double valorTotal;
 

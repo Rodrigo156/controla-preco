@@ -47,23 +47,24 @@
 					<p:autoComplete value="#{controladorCompra.produtoSelecionado}"
 						completeMethod="#{controladorCompra.completarProduto}"
 						converter="conversorProduto" itemLabel="#{item.nome}" size="60"
-						dropdown="true" itemValue="#{item}" var="item" />
+						dropdown="true" itemValue="#{item}" var="item" required="true"
+						label="Produto" />
 
 					<p:outputLabel value="Preço unitário:" />
 					<p:inputText value="#{controladorCompra.valorUnitario}"
-						required="true" label="Preço unitário">
+						required="true" label="Valor unitário">
 						<f:convertNumber locale="pt_BR" />
 					</p:inputText>
 
 					<p:outputLabel value="Quantidade:" />
 					<p:inputText value="#{controladorCompra.quantidade}">
-						<f:convertNumber locale="pt_BR" maxFractionDigits="2" />
+						<f:convertNumber locale="pt_BR" maxFractionDigits="3" />
 					</p:inputText>
 
 					<f:facet name="footer">
 						<p:commandButton action="#{controladorCompra.adicionarItem}"
-							icon="ui-icon-circle-plus"
-							update="tabelaItens,txtId,gradeProduto" />
+							accesskey="a" icon="ui-icon-circle-plus"
+							update="messages,tabelaItens,txtId,gradeProduto" />
 					</f:facet>
 
 				</p:panelGrid>

@@ -9,7 +9,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="comum/template.xhtml">
+<ui:composition template="comum/templatePublico.xhtml">
 
 	<ui:define name="body">
 		<h:form>
@@ -17,25 +17,24 @@
 
 			<p:spacer height="3px" />
 
-			<p:panel header="Acesso"
-				style="margin-left: 34%; margin-right: 34%;">
+			<p:panel header="Acesso" style="margin-left: 34%; margin-right: 34%;">
 
 
 				<div align="center">
-					<p:inputText value="#{loginBean.usuario.email}" id="txtEmail"
-						requiredMessage="Informe um e-mail"
+					<p:inputText value="#{controladorLogin.usuario.email}"
+						id="txtEmail" requiredMessage="Informe um e-mail"
 						validatorMessage="e-mail inválido">
 						<f:validateRegex
 							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 					</p:inputText>
-				<p:watermark value="Informe seu e-mail" for="txtEmail" />
+					<p:watermark value="Informe seu e-mail" for="txtEmail" />
 
 				</div>
 				<p:spacer height="6px" />
 
 				<f:facet name="footer">
-					<p:commandButton value="Login" ajax="false"
-						action="#{loginBean.login}" icon="ui-icon-gear" />
+					<p:commandButton value="Login" ajax="false" update="messages"
+						action="#{controladorLogin.login}" icon="ui-icon-gear" />
 				</f:facet>
 			</p:panel>
 

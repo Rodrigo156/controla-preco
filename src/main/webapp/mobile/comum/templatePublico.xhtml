@@ -19,13 +19,6 @@
 	<f:view>
 
 		<div id="header">
-			<ul class="menu">
-				<li><a class="link" href="compras.faces">Compra</a></li>
-				<li><a class="link" href="estabelecimentos.faces">Estabelecimento</a></li>
-				<li><a class="link" href="produtos.faces">Produto</a></li>
-				<li><a class="link" href="usuarios.faces">Usuário</a></li>
-				<li><a class="link" href="relatorios.faces">Relatório</a></li>
-			</ul>
 		</div>
 
 		<div id="content" class="content">
@@ -35,9 +28,9 @@
 		<div id="footer">
 			<ui:insert name="rodape">
 				<p:panel>
-					<p:outputLabel rendered="#{not empty controladorLogin.usuario.email}"
-						value="#{loginBean.usuario.nome} (#{controladorLogin.usuario.email})" />
-					<p:outputLabel rendered="#{empty controladorLogin.usuario.email}"
+					<p:outputLabel rendered="#{not empty loginBean.usuario.email}"
+						value="#{loginBean.usuario.nome} (#{loginBean.usuario.email})" />
+					<p:outputLabel rendered="#{empty loginBean.usuario.email}"
 						value="Nenhum usuário selecionado" />
 				</p:panel>
 			</ui:insert>

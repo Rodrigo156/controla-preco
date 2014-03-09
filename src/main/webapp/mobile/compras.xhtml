@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+
+<h:body>
+	<pm:page id="first" title="Controla Preço">
+		<pm:header title="Compras" theme="b"></pm:header>
+
+		<pm:content>
+			<h:form>
+
+				<p:growl id="messages" />
+
+				<p:dataList value="#{controladorCompra.compras}" var="item"
+					id="tabelaCompras" type="inset">
+					<ui:param name="url" value="compra.faces?id=#{item.id}" />
+					<f:facet name="header">Compras</f:facet>
+					<h:commandLink action="compra" value="#{item.estabelecimento.nome}"
+						ajax="false">
+						<f:param name="id" value="#{item.id}" />
+						<br />
+						<p:outputLabel value="#{item.data}">
+							<f:convertDateTime locale="pt_BR" type="both" />
+						</p:outputLabel>
+						<br />
+						<p:outputLabel value="#{item.valorTotal}">
+							<f:convertNumber type="currency" />
+						</p:outputLabel>
+					</h:commandLink>
+				</p:dataList>
+
+				<p:spacer height="6px" />
+
+			</h:form>
+		</pm:content>
+	</pm:page>
+</h:body>
+</html>
