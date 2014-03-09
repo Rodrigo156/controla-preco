@@ -3,17 +3,23 @@ package net.marcoreis.controlapreco.controlador;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 import net.marcoreis.controlapreco.entidades.Produto;
 
+import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
 
-public class ControladorProduto extends BaseBean {
+@ManagedBean
+@RequestScoped
+public class ControladorProduto extends ControladorGenerico {
     private static final long serialVersionUID = -5962643759675198689L;
     private Produto produto;
     private List<Produto> produtos;
     private UploadedFile imagem;
     private ServicoProduto servico = new ServicoProduto();
+    private static Logger logger = Logger.getLogger(ControladorProduto.class);
 
     @PostConstruct
     public void init() {
@@ -52,6 +58,16 @@ public class ControladorProduto extends BaseBean {
     public String editar(Produto produto) {
         this.produto = produto;
         return "produto";
+    }
+
+    public void salvar() {
+        try {
+            getServico().salvar(getProduto());
+            infoMsg(MENSAGEM_SUCESSO);
+        } catch (Exception e) {
+            logger.error(e);
+            errorMsg(MENSAGEM_ERRO);
+        }
     }
 
 }

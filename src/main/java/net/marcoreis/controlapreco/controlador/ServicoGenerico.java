@@ -12,7 +12,11 @@ public class ServicoGenerico {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
             em.getTransaction().begin();
+            // if (persistente.getId() != null && persistente.getId() > 0) {
             em.merge(persistente);
+            // } else {
+            // em.persist(persistente);
+            // }
             em.getTransaction().commit();
         } catch (Exception e) {
             throw new RuntimeException(e);

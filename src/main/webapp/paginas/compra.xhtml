@@ -20,26 +20,31 @@
 			<p:panel header="Produto"
 				style="margin-left: 24%; margin-right: 24%;">
 
-				<p:dataTable var="item" value="#{controladorProduto.produtos}"
-					id="tabelaProdutos">
-					<p:column headerText="Nome">
-						<h:outputText value="#{item.nome}" />
-					</p:column>
-					<p:column headerText="Categoria">
-						<h:outputText value="#{item.categoria.nome}" />
-					</p:column>
-					<p:column style="width: 50px;">
-						<p:commandButton icon="ui-icon-pencil" ajax="false"
-							action="#{controladorProduto.editar(item)}" />
-						<p:commandButton icon="ui-icon-trash" />
-					</p:column>
-				</p:dataTable>
+				<h:inputHidden value="#{controladorCompra.compra.id}" />
+
+				<p:panelGrid columns="2">
+
+					<p:outputLabel value="ID:" />
+					<p:inputText value="#{controladorCompra.compra.id}" id="txtId"
+						disabled="true" />
+
+					<p:outputLabel value="Data:" />
+					<p:inputMask value="#{controladorCompra.compra.data}"
+						mask="99/99/9999 99:99">
+						<f:convertDateTime pattern="dd/MM/yyyy hh:mm" />
+					</p:inputMask>
+
+				</p:panelGrid>
 
 				<p:spacer height="6px" />
 
 				<f:facet name="footer">
-					<p:commandButton value="Novo" action="produto" ajax="false"
-						icon="ui-icon-document" />
+					<p:commandButton value="Salvar"
+						actionListener="#{controladorProduto.salvar}" icon="ui-icon-disk"
+						update="messages,txtId" />
+					<p:commandButton value="Voltar" type="submit" immediate="true"
+						action="produtos?faces-redirect=true" ajax="false"
+						icon="ui-icon-arrowreturnthick-1-w" />
 				</f:facet>
 			</p:panel>
 

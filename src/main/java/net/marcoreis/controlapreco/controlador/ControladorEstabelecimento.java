@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 
 import net.marcoreis.controlapreco.entidades.Estabelecimento;
 
 @ManagedBean
-public class ControladorEstabelecimento extends BaseBean {
+@RequestScoped
+public class ControladorEstabelecimento extends ControladorGenerico {
     private static final long serialVersionUID = -8276067130004922771L;
     private List<Estabelecimento> estabelecimentos;
     private ServicoEstabelecimento servico = new ServicoEstabelecimento();

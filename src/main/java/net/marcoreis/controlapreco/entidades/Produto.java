@@ -7,7 +7,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Produto {
+public class Produto implements IPersistente {
     @Id
     @GeneratedValue
     private Long id;

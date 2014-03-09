@@ -10,10 +10,11 @@ import net.marcoreis.controlapreco.entidades.Usuario;
 
 import org.apache.log4j.Logger;
 
-public class BaseBean implements Serializable {
+public class ControladorGenerico implements Serializable {
     private static final long serialVersionUID = -5895396595360064610L;
-    protected static final Logger logger = Logger.getLogger(BaseBean.class);
+    protected static final Logger logger = Logger.getLogger(ControladorGenerico.class);
     protected String MENSAGEM_SUCESSO = "Dados gravados com sucesso";
+    protected String MENSAGEM_ERRO = "Não foi possível gravar";
     private Usuario usuario;
 
     @PostConstruct

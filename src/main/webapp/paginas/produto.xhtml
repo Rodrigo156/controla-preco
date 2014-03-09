@@ -20,14 +20,16 @@
 			<p:panel header="Produto"
 				style="margin-left: 24%; margin-right: 24%;">
 
+				<h:inputHidden value="#{controladorProduto.produto.id}" />
+
 				<p:panelGrid columns="2">
 
 					<p:outputLabel value="ID:" />
-					<p:inputText value="#{controladorProduto.produto.id}"
+					<p:inputText value="#{controladorProduto.produto.id}" id="txtId"
 						disabled="true" />
 
 					<p:outputLabel value="Nome:" />
-					<p:inputText value="#{controladorProduto.produto}" />
+					<p:inputText value="#{controladorProduto.produto.nome}" />
 
 					<p:outputLabel value="Especificação do fabricante" />
 					<p:fileUpload value="#{controladorProduto.imagem}" mode="simple" />
@@ -38,8 +40,9 @@
 
 				<f:facet name="footer">
 					<p:commandButton value="Salvar"
-						actionListener="#{categoriaProduto.salvar}" icon="ui-icon-disk" />
-					<p:commandButton value="Voltar" type="submit"
+						actionListener="#{controladorProduto.salvar}" icon="ui-icon-disk"
+						update="messages,txtId" />
+					<p:commandButton value="Voltar" type="submit" immediate="true"
 						action="produtos?faces-redirect=true" ajax="false"
 						icon="ui-icon-arrowreturnthick-1-w" />
 				</f:facet>
