@@ -5,21 +5,21 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.marcoreis.controlapreco.controlador.ServicoProduto;
 
-@FacesConverter(forClass = Produto.class, value = "conversorProduto")
+@FacesConverter(forClass = Produto.class)
 public class ConversorProduto implements Converter {
     private ServicoProduto servico = new ServicoProduto();
 
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
-        if (StringUtils.isEmpty(value))
+        try {
+            Long id = Long.parseLong(value);
+            Object obj = servico.findById(Produto.class, id);
+            return obj;
+        } catch (Exception e) {
             return null;
-        Long id = Long.parseLong(value);
-        Object obj = servico.findById(Produto.class, id);
-        return obj;
+        }
     }
 
     public String getAsString(FacesContext context, UIComponent component,

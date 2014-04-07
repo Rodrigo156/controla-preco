@@ -18,8 +18,7 @@
 <h:body>
 	<f:view>
 
-		<div id="header">
-		</div>
+		<div id="header"></div>
 
 		<div id="content" class="content">
 			<ui:insert name="body">Body</ui:insert>
@@ -28,10 +27,7 @@
 		<div id="footer">
 			<ui:insert name="rodape">
 				<p:panel>
-					<p:outputLabel rendered="#{not empty loginBean.usuario.email}"
-						value="#{loginBean.usuario.nome} (#{loginBean.usuario.email})" />
-					<p:outputLabel rendered="#{empty loginBean.usuario.email}"
-						value="Nenhum usuário selecionado" />
+					<p:outputLabel value="Informe os dados para acessar o sistema" />
 				</p:panel>
 			</ui:insert>
 		</div>
