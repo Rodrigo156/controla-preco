@@ -1,5 +1,6 @@
 package net.marcoreis.controlapreco.controlador;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,7 +10,8 @@ import net.marcoreis.controlapreco.util.JPAUtil;
 
 import org.apache.log4j.Logger;
 
-public class ServicoGenerico {
+public class ServicoGenerico implements Serializable {
+    private static final long serialVersionUID = 1410786127780867298L;
     private static Logger logger = Logger.getLogger(ServicoGenerico.class);
 
     public IPersistente salvar(IPersistente persistente) {
@@ -43,9 +45,9 @@ public class ServicoGenerico {
         }
     }
 
-    public IPersistente findById(Class clazz, Long id) {
+    public Object findById(Class clazz, Long id) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
-        IPersistente p = em.find(clazz, id);
+        Object p = em.find(clazz, id);
         em.close();
         return p;
     }
@@ -53,7 +55,7 @@ public class ServicoGenerico {
     public void excluir(Class clazz, Long id) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
-            IPersistente persistente = em.find(clazz, id);
+            Object persistente = em.find(clazz, id);
             em.getTransaction().begin();
             em.remove(persistente);
             em.getTransaction().commit();
