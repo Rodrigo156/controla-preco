@@ -1,4 +1,4 @@
-package net.marcoreis.controlapreco.entidades;
+package net.marcoreis.controlapreco.apresentacao.conversores;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -6,6 +6,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import net.marcoreis.controlapreco.controlador.ServicoEstabelecimento;
+import net.marcoreis.controlapreco.entidades.Estabelecimento;
 
 @FacesConverter(forClass = Estabelecimento.class, value = "conversorEstabelecimento")
 public class ConversorEstabelecimento implements Converter {

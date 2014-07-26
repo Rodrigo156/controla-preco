@@ -21,11 +21,9 @@
 		<version.war.plugin>2.1.1</version.war.plugin>
 		<maven.compiler.target>1.7</maven.compiler.target>
 		<maven.compiler.source>1.7</maven.compiler.source>
-
-		<jdbc.url><![CDATA[jdbc:mysql://marcoreis.net:3306/marcorei_controla-preco?useUnicode=true&amp;autoReconnect=true]]></jdbc.url>
-		<jdbc.username>marcorei_cp</jdbc.username>
-		<jdbc.password>b7bfQ?GS)$CI</jdbc.password>
+		
 		<versao.hibernate>4.3.4.Final</versao.hibernate>
+		
 	</properties>
 
 	<repositories>
@@ -69,11 +67,11 @@
 			<version>2.2.5</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate.javax.persistence</groupId> -->
+		<!-- <artifactId>hibernate-jpa-2.0-api</artifactId> -->
+		<!-- <version>1.0.1.Final</version> -->
+		<!-- </dependency> -->
 
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -84,6 +82,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${versao.hibernate}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
 			<version>${versao.hibernate}</version>
 		</dependency>
 
@@ -164,7 +168,6 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.26</version>
-			<!-- <scope>provided</scope> -->
 		</dependency>
 
 	</dependencies>

@@ -47,7 +47,8 @@
 					<p:autoComplete value="#{controladorCompra.produtoSelecionado}"
 						completeMethod="#{controladorCompra.completarProduto}"
 						converter="conversorProduto" itemLabel="#{item.nome}" size="60"
-						dropdown="true" itemValue="#{item}" var="item" required="true"
+						autocomplete="true" required="true" dropdown="true"
+						itemValue="#{item}" var="item" forceSelection="true"
 						label="Produto" />
 
 					<p:outputLabel value="Preço unitário:" />

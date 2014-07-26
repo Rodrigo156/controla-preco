@@ -3,20 +3,34 @@ package net.marcoreis.controlapreco.entidades;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Categoria implements IPersistente {
+public class Categoria extends Persistente {
+    private static final long serialVersionUID = 3307281769366472962L;
+    private String nome;
     @Id
     @GeneratedValue
     private Long id;
-    private String nome;
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Usuario usuario;
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setNome(String nome) {

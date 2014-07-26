@@ -8,15 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Usuario implements IPersistente {
-    private Long id;
+public class Usuario extends Persistente {
+    private static final long serialVersionUID = -281067258178971539L;
     @Column(unique = true)
     private String email;
     private String nome;
     private Date ultimoLogin;
-
     @Id
     @GeneratedValue
+    private Long id;
+
     public Long getId() {
         return id;
     }

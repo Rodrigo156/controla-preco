@@ -94,6 +94,9 @@ public class ControladorCompra extends ControladorGenerico {
     }
 
     public Produto getProdutoSelecionado() {
+        if (produtoSelecionado == null) {
+            produtoSelecionado = new Produto();
+        }
         return produtoSelecionado;
     }
 
@@ -143,6 +146,10 @@ public class ControladorCompra extends ControladorGenerico {
         if (getCompra().getId() == 0) {
             compra = (Compra) getServico().salvar(getCompra());
         }
+        // if (getProdutoSelecionado().getId() == null) {
+        // produtoSelecionado = (Produto) getServico().salvar(
+        // getProdutoSelecionado());
+        // }
         Double fracao = getQuantidade() % 1;
         if (fracao > 0) {
             preencherDadosFracao();

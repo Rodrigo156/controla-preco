@@ -1,4 +1,4 @@
-package net.marcoreis.controlapreco.entidades;
+package net.marcoreis.controlapreco.apresentacao.conversores;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -6,8 +6,9 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 import net.marcoreis.controlapreco.controlador.ServicoProduto;
+import net.marcoreis.controlapreco.entidades.Produto;
 
-@FacesConverter(forClass = Produto.class)
+@FacesConverter(forClass = Produto.class, value = "conversorProduto")
 public class ConversorProduto implements Converter {
     private ServicoProduto servico = new ServicoProduto();
 

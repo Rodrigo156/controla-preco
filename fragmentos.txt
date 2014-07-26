@@ -1,0 +1,13 @@
+http://demos.jquerymobile.com/1.1.2/docs/buttons/buttons-icons.html
+
+drop table ItemCompra;
+
+drop table Produto;
+
+DROP TABLE Categoria;
+
+drop table Compra;
+
+drop table Estabelecimento;
+
+drop table Usuario;
