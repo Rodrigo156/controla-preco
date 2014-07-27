@@ -3,18 +3,29 @@ package net.marcoreis.controlapreco.controlador;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import net.marcoreis.controlapreco.entidades.Usuario;
+import net.marcoreis.controlapreco.service.ServicoUsuario;
 
 @ManagedBean
 @SessionScoped
 public class ControladorLogin extends ControladorGenerico {
     private static final long serialVersionUID = -3509083378761959358L;
     private ServicoUsuario servico = new ServicoUsuario();
+    protected static final String LOGIN_INVALIDO = "Usuário inválido";
+    private String email;
 
     @PostConstruct
     public void init() {
-        setUsuario(new Usuario());
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public ServicoUsuario getServico() {
@@ -23,9 +34,9 @@ public class ControladorLogin extends ControladorGenerico {
 
     public String login() {
         try {
-            Usuario usuario = getServico().findByEmail(getUsuario().getEmail());
+            Usuario usuario = getServico().findByEmail(getEmail());
             if (usuario != null) {
-                setUsuario(usuario);
+                colocarUsuarioNaSessao(usuario);
                 return "inicio";
             }
         } catch (Exception e) {
@@ -34,4 +45,5 @@ public class ControladorLogin extends ControladorGenerico {
         errorMsg(LOGIN_INVALIDO);
         return null;
     }
+
 }

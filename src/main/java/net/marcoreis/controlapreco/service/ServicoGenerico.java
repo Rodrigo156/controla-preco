@@ -1,4 +1,4 @@
-package net.marcoreis.controlapreco.controlador;
+package net.marcoreis.controlapreco.service;
 
 import java.io.Serializable;
 import java.util.List;

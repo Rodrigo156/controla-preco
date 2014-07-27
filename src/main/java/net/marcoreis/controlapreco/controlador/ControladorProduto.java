@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import net.marcoreis.controlapreco.entidades.Produto;
+import net.marcoreis.controlapreco.service.ServicoProduto;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
@@ -62,6 +63,7 @@ public class ControladorProduto extends ControladorGenerico {
 
     public void salvar() {
         try {
+            getProduto().setUsuario(getUsuario());
             getServico().salvar(getProduto());
             infoMsg(MENSAGEM_SUCESSO);
         } catch (Exception e) {

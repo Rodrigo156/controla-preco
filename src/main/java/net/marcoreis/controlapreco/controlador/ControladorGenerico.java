@@ -16,20 +16,21 @@ public class ControladorGenerico implements Serializable {
             .getLogger(ControladorGenerico.class);
     protected String MENSAGEM_SUCESSO = "Dados gravados com sucesso";
     protected String MENSAGEM_ERRO = "Não foi possível gravar";
-    protected static final String LOGIN_INVALIDO = "Usuário inválido";
-    private Usuario usuario;
 
     @PostConstruct
     public void init() {
-        usuario = new Usuario();
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public Usuario getUsuario() {
+        Usuario usuario = (Usuario) FacesContext.getCurrentInstance()
+                .getExternalContext().getSessionMap().get("usuario");
         return usuario;
+    }
+
+    public void colocarUsuarioNaSessao(Usuario usuario) {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .put("usuario", usuario);
+
     }
 
     protected void infoMsg(String message) {

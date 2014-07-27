@@ -5,8 +5,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import net.marcoreis.controlapreco.controlador.ServicoProduto;
 import net.marcoreis.controlapreco.entidades.Produto;
+import net.marcoreis.controlapreco.service.ServicoProduto;
 
 @FacesConverter(forClass = Produto.class, value = "conversorProduto")
 public class ConversorProduto implements Converter {

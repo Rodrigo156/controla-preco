@@ -49,4 +49,5 @@ public class Usuario extends Persistente {
     public Date getUltimoLogin() {
         return ultimoLogin;
     }
+
 }

@@ -1,4 +1,4 @@
-package net.marcoreis.controlapreco.controlador;
+package net.marcoreis.controlapreco.service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

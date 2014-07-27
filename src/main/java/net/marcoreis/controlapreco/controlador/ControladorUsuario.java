@@ -5,10 +5,9 @@ import java.util.Collection;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.persistence.EntityManager;
 
 import net.marcoreis.controlapreco.entidades.Usuario;
-import net.marcoreis.controlapreco.util.JPAUtil;
+import net.marcoreis.controlapreco.service.ServicoUsuario;
 
 @ManagedBean
 @RequestScoped

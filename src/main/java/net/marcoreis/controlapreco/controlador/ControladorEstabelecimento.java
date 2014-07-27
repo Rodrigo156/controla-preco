@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import net.marcoreis.controlapreco.entidades.Estabelecimento;
+import net.marcoreis.controlapreco.service.ServicoEstabelecimento;
 
 @ManagedBean
 @RequestScoped
@@ -43,6 +44,7 @@ public class ControladorEstabelecimento extends ControladorGenerico {
     }
 
     public void salvar() {
+        getEstabelecimento().setUsuario(getUsuario());
         getServico().salvar(getEstabelecimento());
         infoMsg(MENSAGEM_SUCESSO);
     }

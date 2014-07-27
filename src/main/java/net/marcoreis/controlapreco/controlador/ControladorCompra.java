@@ -15,6 +15,7 @@ import net.marcoreis.controlapreco.entidades.Compra;
 import net.marcoreis.controlapreco.entidades.Estabelecimento;
 import net.marcoreis.controlapreco.entidades.ItemCompra;
 import net.marcoreis.controlapreco.entidades.Produto;
+import net.marcoreis.controlapreco.service.ServicoCompra;
 
 import org.apache.commons.lang.StringUtils;
 import org.primefaces.event.SelectEvent;
@@ -77,6 +78,7 @@ public class ControladorCompra extends ControladorGenerico {
 
     public void salvar() {
         try {
+            getCompra().setUsuario(getUsuario());
             getServico().salvar(getCompra());
             infoMsg(MENSAGEM_SUCESSO);
         } catch (Exception e) {
@@ -139,10 +141,12 @@ public class ControladorCompra extends ControladorGenerico {
         getItens().remove(item);
         atualizarValorTotal();
         getCompra().setValorTotal(getValorTotal());
+        getCompra().setUsuario(getUsuario());
         compra = (Compra) getServico().salvar(getCompra());
     }
 
     public void adicionarItem() {
+        getCompra().setUsuario(getUsuario());
         if (getCompra().getId() == 0) {
             compra = (Compra) getServico().salvar(getCompra());
         }
@@ -173,6 +177,7 @@ public class ControladorCompra extends ControladorGenerico {
             item.setQuantidade(1d);
             item.setValorUnitario(getValorUnitario());
             item.setValorTotal(getValorUnitario());
+            item.setUsuario(getUsuario());
             item = (ItemCompra) getServico().salvar(item);
             valorTotal += getValorUnitario();
             getItens().add(item);
@@ -186,6 +191,7 @@ public class ControladorCompra extends ControladorGenerico {
         item.setValorUnitario(getValorUnitario());
         item.setValorTotal(getValorUnitario() * getQuantidade());
         item.setQuantidade(getQuantidade());
+        item.setUsuario(getUsuario());
         item = (ItemCompra) getServico().salvar(item);
         valorTotal += getValorUnitario();
         getItens().add(item);
