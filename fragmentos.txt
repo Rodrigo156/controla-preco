@@ -11,3 +11,9 @@ drop table Compra;
 drop table Estabelecimento;
 
 drop table Usuario;
+
+Referencia
+
+http://blog.goldmap.com.br/2012/05/quais-melhores-praticas-ao-organizar-seus-gastos-pessoais/
+http://blog.goldmap.com.br/2012/03/como-fazer-um-orcamento-domestico-matador/
+http://www.minhaseconomias.com.br/como-funciona/planejamento-financeiro-pessoal

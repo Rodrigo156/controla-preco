@@ -80,23 +80,20 @@
 						<p:outputLabel>Itens</p:outputLabel>
 					</f:facet>
 
-					<p:column headerText="Produto" sortBy="#{item.produto.nome}">
+					<p:column headerText="Produto">
 						<h:outputText value="#{item.produto.nome}" />
 					</p:column>
-					<p:column headerText="Valor" style="text-align:center;"
-						sortBy="#{item.valorUnitario}">
+					<p:column headerText="Valor" style="text-align:center;">
 						<h:outputText value="#{item.valorUnitario}">
 							<f:convertNumber locale="pt_BR" type="currency" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Quantidade" style="text-align:center;"
-						sortBy="#{item.quantidade}">
+					<p:column headerText="Quantidade" style="text-align:center;">
 						<h:outputText value="#{item.quantidade}">
 							<f:convertNumber locale="pt_BR" />
 						</h:outputText>
 					</p:column>
-					<p:column headerText="Total" style="text-align:center;"
-						sortBy="#{item.valorTotal}">
+					<p:column headerText="Total" style="text-align:center;">
 						<h:outputText value="#{item.valorTotal}">
 							<f:convertNumber locale="pt_BR" type="currency" />
 						</h:outputText>

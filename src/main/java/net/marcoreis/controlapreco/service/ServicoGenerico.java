@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import net.marcoreis.controlapreco.entidades.IPersistente;
 import net.marcoreis.controlapreco.util.JPAUtil;
@@ -65,5 +66,14 @@ public class ServicoGenerico implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    public List findMesesDisponiveis() {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        String sQuery = "select distinct date_format(data, '%Y-%m') from Compra";
+        Query query = em.createNativeQuery(sQuery);
+        List resultado = query.getResultList();
+        em.close();
+        return resultado;
     }
 }

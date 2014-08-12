@@ -16,6 +16,8 @@ public class Categoria extends Persistente {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Usuario usuario;
+    @ManyToOne
+    private Categoria categoriaPai;
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
@@ -41,4 +43,11 @@ public class Categoria extends Persistente {
         return nome;
     }
 
+    public void setCategoriaPai(Categoria categoriaPai) {
+        this.categoriaPai = categoriaPai;
+    }
+
+    public Categoria getCategoriaPai() {
+        return categoriaPai;
+    }
 }
