@@ -34,6 +34,13 @@
 					<p:outputLabel value="Nome:" />
 					<p:inputText value="#{controladorCategoria.categoria.nome}" />
 
+					<p:outputLabel value="Categoria pai:" />
+					<p:autoComplete
+						value="#{controladorCategoria.categoria.categoriaPai}"
+						completeMethod="#{controladorCategoria.completarCategoria}"
+						itemLabel="#{item.nome}" size="60" dropdown="true"
+						itemValue="#{item}" var="item" />
+
 				</p:panelGrid>
 
 				<p:spacer height="6px" />

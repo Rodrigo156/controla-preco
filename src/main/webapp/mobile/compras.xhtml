@@ -22,7 +22,7 @@
 				<p:growl id="messages" />
 
 				<p:dataList value="#{controladorCompra.compras}" var="item"
-					id="tabelaCompras" type="inset">
+					id="tabelaCompras">
 					<ui:param name="url" value="compra.faces?id=#{item.id}" />
 					<f:facet name="header">Compras</f:facet>
 					<h:commandLink action="compra" value="#{item.estabelecimento.nome}"

@@ -26,13 +26,13 @@
 					<p:column headerText="Nome">
 						<h:outputText value="#{item.nome}" />
 					</p:column>
+					<p:column headerText="Categoria" sortBy="#{item.categoriaPai.nome}">
+						<h:outputText value="#{item.categoriaPai.nome}" />
+					</p:column>
+
 					<p:column style="width: 75px;">
-						<p:commandButton type="submit"
-							action="categoria?faces-redirect=true&amp;includeViewParams=true"
-							icon="ui-icon-pencil" ajax="false">
-							<f:setPropertyActionListener
-								target="#{controladorCategoria.categoria}" value="#{item}" />
-						</p:commandButton>
+						<p:commandButton icon="ui-icon-pencil" ajax="false"
+							action="#{controladorCategoria.editar(item)}" />
 						<p:commandButton icon="ui-icon-trash"
 							update="tabelaCategorias,:formulario:messages"
 							action="#{controladorCategoria.excluir(item)}" />

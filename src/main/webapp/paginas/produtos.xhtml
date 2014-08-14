@@ -20,12 +20,21 @@
 			<p:panel header="Produto"
 				style="margin-left: 24%; margin-right: 24%;">
 
+				<f:facet name="header">
+					<p:outputLabel value="Produtos" />
+					<p:commandButton value="Novo" action="produto" ajax="false"
+						icon="ui-icon-document" style="float:right;" />
+				</f:facet>
+
+				<p:spacer height="6px" />
+
 				<p:dataTable var="item" value="#{controladorProduto.produtos}"
+					rows="20" paginator="true" paginatorAlwaysVisible="false"
 					id="tabelaProdutos">
-					<p:column headerText="Nome">
+					<p:column headerText="Nome" sortBy="#{item.nome}">
 						<h:outputText value="#{item.nome}" />
 					</p:column>
-					<p:column headerText="Categoria">
+					<p:column headerText="Categoria" sortBy="#{item.categoria.nome}">
 						<h:outputText value="#{item.categoria.nome}" />
 					</p:column>
 					<p:column style="width: 74px;">

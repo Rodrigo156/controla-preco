@@ -146,27 +146,31 @@ public class ControladorCompra extends ControladorGenerico {
     }
 
     public void adicionarItem() {
-        getCompra().setUsuario(getUsuario());
-        if (getCompra().getId() == 0) {
+        try {
+            getCompra().setUsuario(getUsuario());
+            if (getCompra().getId() == 0) {
+                compra = (Compra) getServico().salvar(getCompra());
+            }
+            // if (getProdutoSelecionado().getId() == null) {
+            // produtoSelecionado = (Produto) getServico().salvar(
+            // getProdutoSelecionado());
+            // }
+            Double fracao = getQuantidade() % 1;
+            if (fracao > 0) {
+                preencherDadosFracao();
+            } else {
+                preencherDadosInteiro();
+            }
+            //
+            getCompra().setValorTotal(getValorTotal());
             compra = (Compra) getServico().salvar(getCompra());
+            //
+            setProdutoSelecionado(null);
+            setQuantidade(1d);
+            setValorUnitario(null);
+        } catch (Exception e) {
+            errorMsg(e);
         }
-        // if (getProdutoSelecionado().getId() == null) {
-        // produtoSelecionado = (Produto) getServico().salvar(
-        // getProdutoSelecionado());
-        // }
-        Double fracao = getQuantidade() % 1;
-        if (fracao > 0) {
-            preencherDadosFracao();
-        } else {
-            preencherDadosInteiro();
-        }
-        //
-        getCompra().setValorTotal(getValorTotal());
-        compra = (Compra) getServico().salvar(getCompra());
-        //
-        setProdutoSelecionado(null);
-        setQuantidade(1d);
-        setValorUnitario(null);
     }
 
     private void preencherDadosInteiro() {

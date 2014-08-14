@@ -15,9 +15,9 @@ public class ServicoCompra extends ServicoGenerico {
     public List<Produto> findProdutosPorNome(String nome) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
-            Query query = em
-                    .createQuery("from Produto where upper(nome) like ?");
-            query.setParameter(1, "%" + nome.toUpperCase() + "%");
+            String hql = "from Produto where upper(nome) like :nome";
+            Query query = em.createQuery(hql);
+            query.setParameter("nome", "%" + nome.toUpperCase() + "%");
             return query.getResultList();
         } finally {
             em.close();
@@ -28,9 +28,9 @@ public class ServicoCompra extends ServicoGenerico {
     public List<Produto> findEstabelecimentosPorNome(String nome) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
-            Query query = em
-                    .createQuery("from Estabelecimento where upper(nome) like ?");
-            query.setParameter(1, "%" + nome.toUpperCase() + "%");
+            String hql = "from Estabelecimento where upper(nome) like :nome";
+            Query query = em.createQuery(hql);
+            query.setParameter("nome", "%" + nome.toUpperCase() + "%");
             return query.getResultList();
         } finally {
             em.close();
@@ -40,8 +40,8 @@ public class ServicoCompra extends ServicoGenerico {
     public List<ItemCompra> findItensCompra(Long id) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
-            Query query = em.createQuery("from ItemCompra where compra.id = ?");
-            query.setParameter(1, id);
+            Query query = em.createQuery("from ItemCompra where compra.id = :id");
+            query.setParameter("id", id);
             return query.getResultList();
         } finally {
             em.close();
@@ -51,10 +51,10 @@ public class ServicoCompra extends ServicoGenerico {
     public void excluir(Compra compra) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
-            String jpql = "delete from ItemCompra where compra.id = ?";
+            String jpql = "delete from ItemCompra where compra.id = :id";
             em.getTransaction().begin();
             Query query = em.createQuery(jpql);
-            query.setParameter(1, compra.getId());
+            query.setParameter("id", compra.getId());
             query.executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {

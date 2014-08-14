@@ -18,10 +18,10 @@
 			<p:spacer height="3px" />
 
 			<p:panel header="Compras"
-				style="margin-left: 24%; margin-right: 24%;">
+				style="margin-left: 15%; margin-right: 15%;">
 
 				<p:dataTable var="item" value="#{controladorCompra.compras}"
-					id="tabelaCompras">
+					id="tabelaCompras" sortBy="#{item.data}">
 					<p:column headerText="Id">
 						<h:outputText value="#{item.id}" />
 					</p:column>

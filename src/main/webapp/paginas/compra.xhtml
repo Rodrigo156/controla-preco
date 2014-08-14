@@ -17,11 +17,11 @@
 
 			<p:spacer height="3px" />
 
-			<p:panel header="Compra" style="margin-left: 24%; margin-right: 24%;">
+			<p:panel header="Compra" style="margin-left: 14%; margin-right: 14%;">
 
 				<h:inputHidden value="#{controladorCompra.compra.id}" />
 
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="2" style="width:100%;">
 
 					<p:outputLabel value="ID:" />
 					<p:inputText value="#{controladorCompra.compra.id}" id="txtId"
@@ -42,7 +42,7 @@
 
 				<p:spacer height="6px" />
 
-				<p:panelGrid columns="2" id="gradeProduto">
+				<p:panelGrid columns="2" id="gradeProduto" style="width:100%;">
 					<p:outputLabel value="Produto:" />
 					<p:autoComplete value="#{controladorCompra.produtoSelecionado}"
 						completeMethod="#{controladorCompra.completarProduto}"

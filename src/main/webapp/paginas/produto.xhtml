@@ -22,7 +22,7 @@
 
 				<h:inputHidden value="#{controladorProduto.produto.id}" />
 
-				<p:panelGrid columns="2">
+				<p:panelGrid columns="2" style="width:100%;">
 
 					<p:outputLabel value="ID:" />
 					<p:inputText value="#{controladorProduto.produto.id}" id="txtId"
@@ -30,6 +30,12 @@
 
 					<p:outputLabel value="Nome:" />
 					<p:inputText value="#{controladorProduto.produto.nome}" />
+
+					<p:outputLabel value="Categoria:" />
+					<p:autoComplete value="#{controladorProduto.produto.categoria}"
+						completeMethod="#{controladorCategoria.completarCategoria}"
+						itemLabel="#{item.nome}" size="60" dropdown="true"
+						itemValue="#{item}" var="item" />
 
 				</p:panelGrid>
 
@@ -39,6 +45,8 @@
 					<p:commandButton value="Salvar"
 						actionListener="#{controladorProduto.salvar}" icon="ui-icon-disk"
 						update="messages,txtId" />
+					<p:commandButton value="Novo" action="produto?faces-redirect=true" ajax="false"
+						icon="ui-icon-document" />
 					<p:commandButton value="Voltar" type="submit" immediate="true"
 						action="produtos?faces-redirect=true" ajax="false"
 						icon="ui-icon-arrowreturnthick-1-w" />

@@ -44,9 +44,13 @@ public class ControladorEstabelecimento extends ControladorGenerico {
     }
 
     public void salvar() {
-        getEstabelecimento().setUsuario(getUsuario());
-        getServico().salvar(getEstabelecimento());
-        infoMsg(MENSAGEM_SUCESSO);
+        try {
+            getEstabelecimento().setUsuario(getUsuario());
+            getServico().salvar(getEstabelecimento());
+            infoMsg(MENSAGEM_SUCESSO);
+        } catch (Exception e) {
+            errorMsg(e);
+        }
     }
 
 }

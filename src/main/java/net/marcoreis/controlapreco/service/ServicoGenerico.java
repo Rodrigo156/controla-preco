@@ -27,6 +27,7 @@ public class ServicoGenerico implements Serializable {
             em.getTransaction().commit();
             return salvo;
         } catch (Exception e) {
+            em.getTransaction().rollback();
             throw new RuntimeException(e);
         } finally {
             em.close();

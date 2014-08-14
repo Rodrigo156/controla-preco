@@ -23,7 +23,6 @@ public class ControladorCategoria extends ControladorGenerico {
     @PostConstruct
     public void init() {
         categoria = new Categoria();
-        categorias = getServico().findAll(Categoria.class);
     }
 
     public Categoria getCategoria() {
@@ -31,6 +30,9 @@ public class ControladorCategoria extends ControladorGenerico {
     }
 
     public List<Categoria> getCategorias() {
+        if (categorias == null) {
+            categorias = getServico().findAll(Categoria.class);
+        }
         return categorias;
     }
 
@@ -60,6 +62,10 @@ public class ControladorCategoria extends ControladorGenerico {
             logger.error(e);
             errorMsg(MENSAGEM_ERRO);
         }
+    }
+
+    public List<Categoria> completarCategoria(String query) {
+        return getServico().findCategoriasPorNome(query);
     }
 
 }
