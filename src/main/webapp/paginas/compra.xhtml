@@ -19,7 +19,7 @@
 
 			<p:panel header="Compra" style="margin-left: 14%; margin-right: 14%;">
 
-				<h:inputHidden value="#{controladorCompra.compra.id}" />
+				<h:inputHidden value="#{controladorCompra.compra.id}" id="hiddenId" />
 
 				<p:panelGrid columns="2" style="width:100%;">
 
@@ -65,7 +65,7 @@
 					<f:facet name="footer">
 						<p:commandButton action="#{controladorCompra.adicionarItem}"
 							accesskey="a" icon="ui-icon-circle-plus"
-							update="messages,tabelaItens,txtId,gradeProduto" />
+							update="messages,tabelaItens,txtId,gradeProduto,hiddenId" />
 					</f:facet>
 
 				</p:panelGrid>
