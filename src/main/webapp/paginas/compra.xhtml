@@ -36,8 +36,8 @@
 					<p:outputLabel value="Estabelecimento:" />
 					<p:autoComplete value="#{controladorCompra.compra.estabelecimento}"
 						completeMethod="#{controladorCompra.completarEstabelecimento}"
-						converter="conversorEstabelecimento" itemLabel="#{item.nome}"
-						size="60" dropdown="true" itemValue="#{item}" var="item" />
+						itemLabel="#{item.nome}" size="60" dropdown="true"
+						itemValue="#{item}" var="item" />
 				</p:panelGrid>
 
 				<p:spacer height="6px" />
@@ -46,10 +46,9 @@
 					<p:outputLabel value="Produto:" />
 					<p:autoComplete value="#{controladorCompra.produtoSelecionado}"
 						completeMethod="#{controladorCompra.completarProduto}"
-						converter="conversorProduto" itemLabel="#{item.nome}" size="60"
-						autocomplete="true" required="true" dropdown="true"
-						itemValue="#{item}" var="item" forceSelection="true"
-						label="Produto" />
+						itemLabel="#{item.nome}" size="60" autocomplete="true"
+						required="true" dropdown="true" itemValue="#{item}" var="item"
+						forceSelection="true" label="Produto" />
 
 					<p:outputLabel value="Preço unitário:" />
 					<p:inputText value="#{controladorCompra.valorUnitario}"

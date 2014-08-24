@@ -29,8 +29,8 @@
 				<p:spacer height="6px" />
 
 				<p:dataTable var="item" value="#{controladorProduto.produtos}"
-					rows="20" paginator="true" paginatorAlwaysVisible="false"
-					id="tabelaProdutos">
+					rows="3" paginator="true" paginatorAlwaysVisible="false"
+					id="tabelaProdutos" sortBy="#{item.nome}">
 					<p:column headerText="Nome" sortBy="#{item.nome}">
 						<h:outputText value="#{item.nome}" />
 					</p:column>
@@ -38,8 +38,12 @@
 						<h:outputText value="#{item.categoria.nome}" />
 					</p:column>
 					<p:column style="width: 74px;">
-						<p:commandButton icon="ui-icon-pencil" ajax="false"
-							action="#{controladorProduto.editar(item)}" />
+						<p:commandButton
+							action="produto?faces-redirect=true&amp;includeViewParams=true"
+							icon="ui-icon-pencil" ajax="false">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{controladorProduto.produto}" />
+						</p:commandButton>
 						<p:commandButton icon="ui-icon-trash" />
 					</p:column>
 				</p:dataTable>

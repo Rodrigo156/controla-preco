@@ -12,6 +12,11 @@
 <ui:composition template="comum/template.xhtml">
 
 	<ui:define name="body">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{controladorProduto.produto}" />
+		</f:metadata>
+
 		<h:form>
 			<p:messages id="messages" />
 

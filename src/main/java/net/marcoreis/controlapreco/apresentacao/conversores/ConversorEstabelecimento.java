@@ -8,7 +8,7 @@ import javax.faces.convert.FacesConverter;
 import net.marcoreis.controlapreco.entidades.Estabelecimento;
 import net.marcoreis.controlapreco.service.ServicoEstabelecimento;
 
-@FacesConverter(forClass = Estabelecimento.class, value = "conversorEstabelecimento")
+@FacesConverter(forClass = Estabelecimento.class)
 public class ConversorEstabelecimento implements Converter {
     private ServicoEstabelecimento servico = new ServicoEstabelecimento();
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import net.marcoreis.controlapreco.entidades.Produto;
 import net.marcoreis.controlapreco.service.ServicoProduto;
@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class ControladorProduto extends ControladorGenerico {
     private static final long serialVersionUID = -5962643759675198689L;
     private Produto produto;

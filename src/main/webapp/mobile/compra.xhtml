@@ -35,8 +35,8 @@
 
 				<p>Estabelecimento</p>
 				<h:selectOneMenu value="#{controladorCompra.compra.estabelecimento}"
-					converter="conversorEstabelecimento" label="Estabelecimento"
-					required="true" requiredMessage="Selecione o estabelecimento">
+					label="Estabelecimento" required="true"
+					requiredMessage="Selecione o estabelecimento">
 					<f:selectItems
 						value="#{controladorEstabelecimento.estabelecimentos}" var="item"
 						itemLabel="#{item.nome}" />
@@ -44,8 +44,7 @@
 
 				<p>Produto</p>
 				<h:selectOneMenu value="#{controladorCompra.produtoSelecionado}"
-					id="comboProduto" converter="conversorProduto" label="Produto"
-					required="true">
+					id="comboProduto" label="Produto" required="true">
 					<f:selectItem itemLabel="" itemValue="" />
 					<f:selectItems value="#{controladorProduto.produtos}" var="item"
 						itemLabel="#{item.nome}" itemValue="#{item}" />

@@ -12,6 +12,10 @@ drop table Estabelecimento;
 
 drop table Usuario;
 
+mysql -u root -proot --default-character-set latin1 --database=controla-preco < ~/Downloads/marcorei_controla-preco.sql
+
+==================
+
 Referencia
 
 http://blog.goldmap.com.br/2012/05/quais-melhores-praticas-ao-organizar-seus-gastos-pessoais/

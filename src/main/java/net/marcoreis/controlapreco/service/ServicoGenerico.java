@@ -1,7 +1,9 @@
 package net.marcoreis.controlapreco.service;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -69,9 +71,27 @@ public class ServicoGenerico implements Serializable {
         }
     }
 
-    public List findMesesDisponiveis() {
+    public List<String> findMesesDisponiveis() {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         String sQuery = "select distinct date_format(data, '%Y-%m') from Compra";
+        Query query = em.createNativeQuery(sQuery);
+        List resultado = query.getResultList();
+        em.close();
+        return resultado;
+    }
+
+    public Map<Object, Number> recuperarMapaDeGastosPorMes() {
+        List<String> mesesDisponiveis = findMesesDisponiveis();
+        Map<String, Number> mapaDeGastosPorMes = new HashMap<String, Number>();
+        for (String mes : mesesDisponiveis) {
+            Double gastosNoMes = findGastosNoMes(mes);
+        }
+        return null;
+    }
+
+    public Double findGastosNoMes(String mes) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        String sQuery = "select sum( distinct date_format(data, '%Y-%m') from Compra";
         Query query = em.createNativeQuery(sQuery);
         List resultado = query.getResultList();
         em.close();
