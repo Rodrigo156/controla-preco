@@ -89,12 +89,13 @@ public class ServicoGenerico implements Serializable {
         return null;
     }
 
-    public Double findGastosNoMes(String mes) {
-        EntityManager em = JPAUtil.getInstance().getEntityManager();
-        String sQuery = "select sum( distinct date_format(data, '%Y-%m') from Compra";
-        Query query = em.createNativeQuery(sQuery);
-        List resultado = query.getResultList();
-        em.close();
-        return resultado;
-    }
+    // public Double findGastosNoMes(String mes) {
+    // EntityManager em = JPAUtil.getInstance().getEntityManager();
+    // String sQuery =
+    // "select sum( distinct date_format(data, '%Y-%m') from Compra";
+    // Query query = em.createNativeQuery(sQuery);
+    // List resultado = query.getResultList();
+    // em.close();
+    // return resultado;
+    // }
 }
