@@ -21,7 +21,7 @@
 				style="margin-left: 15%; margin-right: 15%;">
 
 				<p:dataTable var="item" value="#{controladorCompra.compras}"
-					id="tabelaCompras" sortBy="#{item.data}">
+					id="tabelaCompras" sortBy="#{item.data}" sortOrder="descending">
 					<p:column headerText="Id">
 						<h:outputText value="#{item.id}" />
 					</p:column>

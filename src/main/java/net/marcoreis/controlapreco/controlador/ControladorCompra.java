@@ -46,7 +46,12 @@ public class ControladorCompra extends ControladorGenerico {
             compra.setData(new Date(System.currentTimeMillis()));
         }
         estabelecimentos = getServico().findAll(Estabelecimento.class);
-        compras = getServico().findAll(Compra.class);
+        carregarCompras();
+    }
+
+    private void carregarCompras() {
+        String jpaql = "from Compra order by data desc";
+        compras = getServico().findAll(jpaql);
     }
 
     private void atualizarValorTotal() {
@@ -197,7 +202,7 @@ public class ControladorCompra extends ControladorGenerico {
         item.setQuantidade(getQuantidade());
         item.setUsuario(getUsuario());
         item = (ItemCompra) getServico().salvar(item);
-        valorTotal += getValorUnitario();
+        valorTotal += item.getValorTotal();
         getItens().add(item);
     }
 

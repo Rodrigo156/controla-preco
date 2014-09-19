@@ -20,7 +20,10 @@
 			<p:panel header="Gráficos"
 				style="margin-left: 14%; margin-right: 14%;">
 
-					<p>Módulo de relatórios</p>
+				<div id="painelCentro">
+					<p:chart type="pie"
+						model="#{controladorRelatorio.graficoDeGastosPorCategoria}" />
+				</div>
 
 
 			</p:panel>

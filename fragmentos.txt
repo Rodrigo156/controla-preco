@@ -1,4 +1,3 @@
-http://demos.jquerymobile.com/1.1.2/docs/buttons/buttons-icons.html
 
 drop table ItemCompra;
 
@@ -12,7 +11,10 @@ drop table Estabelecimento;
 
 drop table Usuario;
 
-mysql -u root -proot --default-character-set latin1 --database=controla-preco < ~/Downloads/marcorei_controla-preco.sql
+
+DROP database `controla-preco`;
+CREATE database `controla-preco` CHARACTER SET utf8 COLLATE utf8_general_ci;
+mysql -u root -proot --default-character-set latin1 --database=controla-preco < ~/Dropbox/marcorei_controla-preco.sql
 
 ==================
 
@@ -21,3 +23,6 @@ Referencia
 http://blog.goldmap.com.br/2012/05/quais-melhores-praticas-ao-organizar-seus-gastos-pessoais/
 http://blog.goldmap.com.br/2012/03/como-fazer-um-orcamento-domestico-matador/
 http://www.minhaseconomias.com.br/como-funciona/planejamento-financeiro-pessoal
+
+http://demos.jquerymobile.com/1.1.2/docs/buttons/buttons-icons.html
+

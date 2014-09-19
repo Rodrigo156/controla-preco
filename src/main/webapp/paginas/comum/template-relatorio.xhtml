@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<c:set var="ctx"
+	value="#{facesContext.externalContext.request.contextPath}" />
+
+<h:head>
+	<link href="${ctx}/paginas/comum/estilo/geral.css" type="text/css"
+		rel="stylesheet" />
+	<title>Controla Preço</title>
+
+</h:head>
+
+<h:body>
+	<f:view>
+
+		<div id="header">
+			<ul class="menu">
+				<li><a class="link" href="compras.faces">Compra</a></li>
+				<li><a class="link" href="estabelecimentos.faces">Estabelecimento</a></li>
+				<li><a class="link" href="produtos.faces">Produto</a></li>
+				<li><a class="link" href="categorias.faces">Categoria</a></li>
+				<li><a class="link" href="usuarios.faces">Usuário</a></li>
+				<li><a class="link" href="relatorios.faces">Relatório</a></li>
+			</ul>
+		</div>
+
+		<div id="content" class="content">
+
+			<div id="painelEsquerdo">
+				<ul class="menu-vertical">
+					<li style="font-weight: bold;">Tipos de gráficos</li>
+					<li><a class="linkEsquerdo"
+						href="relatorio-gastos-mensais.faces">Gastos mensais</a></li>
+					<li><a class="linkEsquerdo"
+						href="relatorio-gastos-categoria.faces">Gastos por categoria</a></li>
+					<li><a class="linkEsquerdo" href="">Comparativo entre
+							produtos</a></li>
+					<li><a class="linkEsquerdo" href="">Open-high-low-close
+							chart</a></li>
+					<li><a class="linkEsquerdo" href="">Candlestick</a></li>
+					<li><a class="linkEsquerdo" href="">Donut</a></li>
+					<li><a class="linkEsquerdo" href="">Master/detail</a></li>
+					<li><a class="linkEsquerdo" href="">Performance financeira</a>
+					</li>
+					<li><a class="linkEsquerdo" href="">Tempo real</a></li>
+					<li><a class="linkEsquerdo" href="">Bolhas</a></li>
+				</ul>
+			</div>
+
+			<div id="painelCentro">
+				<ui:insert name="body">Body</ui:insert>
+			</div>
+
+		</div>
+
+		<div id="footer">
+			<ui:insert name="rodape">
+				<p:panel>
+					<p:outputLabel
+						rendered="#{not empty controladorLogin.usuario.email}"
+						value="#{controladorLogin.usuario.nome} (#{controladorLogin.usuario.email})" />
+					<p:outputLabel rendered="#{empty controladorLogin.usuario.email}"
+						value="Nenhum usuário selecionado" />
+				</p:panel>
+			</ui:insert>
+		</div>
+
+	</f:view>
+
+</h:body>
+
+</html>

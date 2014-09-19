@@ -17,13 +17,14 @@
 
 			<p:spacer height="3px" />
 
-			<p:panel header="Gráficos"
-				style="margin-left: 14%; margin-right: 14%;">
 
-					<p>Módulo de relatórios</p>
+			<div id="painelCentro">
+				<p:lineChart 
+					model="#{controladorRelatorio.dadosGraficoConsumoEletricidade}"
+					style="width:800px;" datatipFormat="%$d"   />
+			</div>
 
 
-			</p:panel>
 
 		</h:form>
 

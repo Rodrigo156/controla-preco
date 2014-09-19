@@ -39,8 +39,20 @@ public class ServicoGenerico implements Serializable {
     public List findAll(Class clazz) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
-            List list = em.createQuery("from " + clazz.getName())
-                    .getResultList();
+            String jpaql = "from " + clazz.getName();
+            List list = em.createQuery(jpaql).getResultList();
+            return list;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List findAll(String jpaql) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        try {
+            List list = em.createQuery(jpaql).getResultList();
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -71,31 +83,4 @@ public class ServicoGenerico implements Serializable {
         }
     }
 
-    public List<String> findMesesDisponiveis() {
-        EntityManager em = JPAUtil.getInstance().getEntityManager();
-        String sQuery = "select distinct date_format(data, '%Y-%m') from Compra";
-        Query query = em.createNativeQuery(sQuery);
-        List resultado = query.getResultList();
-        em.close();
-        return resultado;
-    }
-
-    public Map<Object, Number> recuperarMapaDeGastosPorMes() {
-        List<String> mesesDisponiveis = findMesesDisponiveis();
-        Map<String, Number> mapaDeGastosPorMes = new HashMap<String, Number>();
-        for (String mes : mesesDisponiveis) {
-            Double gastosNoMes = findGastosNoMes(mes);
-        }
-        return null;
-    }
-
-    // public Double findGastosNoMes(String mes) {
-    // EntityManager em = JPAUtil.getInstance().getEntityManager();
-    // String sQuery =
-    // "select sum( distinct date_format(data, '%Y-%m') from Compra";
-    // Query query = em.createNativeQuery(sQuery);
-    // List resultado = query.getResultList();
-    // em.close();
-    // return resultado;
-    // }
 }
