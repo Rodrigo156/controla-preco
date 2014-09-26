@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="comum/template-relatorio.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<p:messages id="messages" />
+
+			<p:spacer height="3px" />
+
+			<div style="display: inline-block;">
+
+				<p:selectCheckboxMenu id="chkProdutos" style="width:300px;"
+					label="Produtos" converter="conversorProduto"
+					value="#{controladorRelatorio.produtosSelecionados}" filter="true"
+					filterMatchMode="contains" showCheckbox="false">
+					<f:selectItems value="#{controladorRelatorio.produtos}"
+						var="itemSelecionado" itemLabel="#{itemSelecionado.nome}"
+						itemValue="#{itemSelecionado}" />
+
+					<p:ajax update="graficoHistoricoPrecoProduto"
+						listener="#{controladorRelatorio.carregarHistoricoPrecoProduto}" />
+
+					<p:column>
+						<h:outputText value="#{item.nome}" />
+					</p:column>
+
+				</p:selectCheckboxMenu>
+				
+				<br />
+				<br />
+				<br />
+				
+				<p:chart type="line" id="graficoHistoricoPrecoProduto"
+					model="#{controladorRelatorio.dadosProdutosSelecionados}"
+					style="width:600px;" />
+
+
+			</div>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>

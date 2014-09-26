@@ -3,7 +3,8 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
 	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
-	<persistence-unit name="controla-preco-pu" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="controla-preco-pu"
+		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
@@ -24,6 +25,12 @@
 			<property name="hibernate.c3p0.max_size" value="2" />
 			<property name="hibernate.c3p0.max_statements" value="50" />
 			<property name="hibernate.c3p0.timeout" value="20" />
+
+
+<!-- 			<property name="hibernate.search.default.directory_provider" -->
+<!-- 				value="org.hibernate.search.store.FSDirectoryProvider" /> -->
+<!-- 			<property name="hibernate.search.default.indexBase" value="/home/marco/indice-controla-preco" /> -->
+
 
 		</properties>
 	</persistence-unit>

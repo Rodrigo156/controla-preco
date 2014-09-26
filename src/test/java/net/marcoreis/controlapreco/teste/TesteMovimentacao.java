@@ -16,7 +16,7 @@ public class TesteMovimentacao {
     public void inserir() {
         Movimentacao m = new Movimentacao();
         m.setData(new Date());
-        m.setTipo(TipoMovimentacao.DESPESA);
+        m.setTipo(TipoMovimentacao.RECEITA);
         m.setValor(1334.0);
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         em.getTransaction().begin();

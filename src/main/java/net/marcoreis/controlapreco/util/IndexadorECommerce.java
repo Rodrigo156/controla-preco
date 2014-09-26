@@ -11,9 +11,9 @@ import net.marcoreis.controlapreco.entidades.Produto;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.Field.Index;
 import org.apache.lucene.document.Field.Store;
-import org.apache.lucene.document.LongField;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
@@ -31,8 +31,8 @@ public class IndexadorECommerce {
     public IndexadorECommerce() {
         try {
             diretorio = FSDirectory.open(new File(Constantes.DIRETORIO_INDICE));
-            Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_48);
-            IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_48,
+            Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_36);
+            IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36,
                     analyzer);
             writer = new IndexWriter(diretorio, config);
         } catch (Exception e) {
@@ -61,10 +61,11 @@ public class IndexadorECommerce {
 
     private void indexarProduto(Produto prod) throws IOException, TikaException {
         Document doc = new Document();
-        doc.add(new LongField("id.produto", prod.getId(), Store.YES));
-        doc.add(new TextField("categoria", prod.getCategoria().getNome(),
-                Store.YES));
-        doc.add(new TextField("nome", prod.getNome(), Store.YES));
+        doc.add(new Field("id.produto", prod.getId().toString(), Store.YES,
+                Index.ANALYZED));
+        doc.add(new Field("categoria", prod.getCategoria().getNome(),
+                Store.YES, Index.ANALYZED));
+        doc.add(new Field("nome", prod.getNome(), Store.YES, Index.ANALYZED));
         // doc.add(new TextField("descricao", prod.getDescricao(), Store.YES));
         // //
         // ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(
@@ -82,9 +83,9 @@ public class IndexadorECommerce {
         // textoCompleto.append(especificacaoFabricante);
         textoCompleto.append(" ");
         // textoCompleto.append(prod.getDescricao());
-        doc.add(new TextField("textoCompleto", textoCompleto.toString(),
-                Store.YES));
-        doc.add(new TextField("tabela", "produto", Store.YES));
+        doc.add(new Field("textoCompleto", textoCompleto.toString(), Store.YES,
+                Index.ANALYZED));
+        doc.add(new Field("tabela", "produto", Store.YES, Index.ANALYZED));
         Term termoIdentificacao = new Term("id.produto", prod.getId()
                 .toString());
         writer.updateDocument(termoIdentificacao, doc);

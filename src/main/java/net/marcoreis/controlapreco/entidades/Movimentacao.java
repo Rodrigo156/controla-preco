@@ -7,11 +7,13 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class Movimentacao implements IPersistente {
+public class Movimentacao extends Persistente {
+    private static final long serialVersionUID = 831627963678011028L;
     @Id
     @GeneratedValue
     private Long id;
@@ -20,6 +22,8 @@ public class Movimentacao implements IPersistente {
     private Double valor;
     @Temporal(TemporalType.DATE)
     private Date data;
+    @ManyToOne (optional = false)
+    private Categoria categoria;
 
     public void setData(Date data) {
         this.data = data;
@@ -53,4 +57,11 @@ public class Movimentacao implements IPersistente {
         return tipo;
     }
 
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
 }

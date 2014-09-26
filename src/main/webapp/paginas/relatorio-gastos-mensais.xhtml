@@ -11,22 +11,18 @@
 
 <ui:composition template="comum/template-relatorio.xhtml">
 
+
 	<ui:define name="body">
 		<h:form>
+
 			<p:messages id="messages" />
 
 			<p:spacer height="3px" />
 
-			<p:panel header="Gráficos"
-				style="margin-left: 14%; margin-right: 14%;">
-
-				<div id="painelCentro">
-					<p:chart type="bar"
-						model="#{controladorRelatorio.graficoDeGastosPorMes}" />
-				</div>
-
-
-			</p:panel>
+			<div id="painelCentro">
+				<p:chart type="line" style="width: 800px;"
+					model="#{controladorRelatorio.graficoDeGastosPorMes}" />
+			</div>
 
 		</h:form>
 

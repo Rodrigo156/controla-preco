@@ -49,7 +49,7 @@ public class ServicoGenerico implements Serializable {
         }
     }
 
-    public List findAll(String jpaql) {
+    public List find(String jpaql) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         try {
             List list = em.createQuery(jpaql).getResultList();

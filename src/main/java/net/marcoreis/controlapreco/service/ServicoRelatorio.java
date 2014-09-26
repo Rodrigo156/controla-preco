@@ -1,14 +1,12 @@
 package net.marcoreis.controlapreco.service;
 
-import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import net.marcoreis.controlapreco.entidades.Produto;
 import net.marcoreis.controlapreco.util.JPAUtil;
 
 import org.apache.log4j.Logger;
@@ -27,16 +25,25 @@ public class ServicoRelatorio extends ServicoGenerico {
         return resultado;
     }
 
-    public List<Object> consultarGastosPorMes() {
+    public List<Object[]> consultarGastosPorMes() {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         String sql = "select date_format(data, '%Y-%m') as mesReferencia, sum(valorTotal) as total from Compra group by date_format(data, '%Y-%m') order by date_format(data, '%Y-%m')";
         Query query = em.createQuery(sql);
-        List<Object> resultado = query.getResultList();
+        List<Object[]> resultado = query.getResultList();
         em.close();
         return resultado;
     }
 
-    public List<Object> consultarGastosPorCategoria(Date mesReferencia) {
+    public List<Object[]> consultarHistorioPrecoProduto() {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        String sql = "select date_format(data, '%Y-%m') as mesReferencia, sum(valorTotal) as total from Compra group by date_format(data, '%Y-%m') order by date_format(data, '%Y-%m')";
+        Query query = em.createQuery(sql);
+        List<Object[]> resultado = query.getResultList();
+        em.close();
+        return resultado;
+    }
+
+    public List<Object[]> consultarGastosPorCategoria(Date mesReferencia) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         StringBuilder sql = new StringBuilder();
         sql.append("select ct.nome as nomeCategoria, sum(ic.valorTotal) as valor from Compra c ");
@@ -45,7 +52,45 @@ public class ServicoRelatorio extends ServicoGenerico {
         sql.append("inner join Categoria ct on p.categoria_id = ct.id ");
         sql.append("group by ct.nome ");
         Query query = em.createNativeQuery(sql.toString());
-        List<Object> resultado = query.getResultList();
+        List<Object[]> resultado = query.getResultList();
+        em.close();
+        return resultado;
+    }
+
+    public List<Object[]> consultarHistoricoPrecoProduto(List<Produto> produtos) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        StringBuilder sql = new StringBuilder();
+        sql.append("select p.nome, avg(ic.valorUnitario) as precoMedio, date_format(data, '%Y-%m') as mesReferencia ");
+        sql.append("from ItemCompra ic  ");
+        sql.append("inner join Compra c on ic.compra_id = c.id ");
+        sql.append("inner join Produto p on p.id = ic.produto_id ");
+        if (produtos.size() > 0) {
+            sql.append("where produto_id in :produtos ");
+        }
+        sql.append("group by date_format(data, '%Y-%m'), p.nome ");
+        sql.append("order by date_format(data, '%Y-%m') ");
+        Query query = em.createNativeQuery(sql.toString());
+        if (produtos.size() > 0) {
+            query.setParameter("produtos", produtos);
+        }
+        List<Object[]> resultado = query.getResultList();
+        em.close();
+        return resultado;
+    }
+
+    public List<Object[]> consultarHistoricoPrecoProduto(Produto produto) {
+        EntityManager em = JPAUtil.getInstance().getEntityManager();
+        StringBuilder sql = new StringBuilder();
+        sql.append("select p.nome, avg(ic.valorUnitario) as precoMedio, date_format(data, '%Y-%m') as mesReferencia ");
+        sql.append("from ItemCompra ic  ");
+        sql.append("inner join Compra c on ic.compra_id = c.id ");
+        sql.append("inner join Produto p on p.id = ic.produto_id ");
+        sql.append("where produto_id = :produto ");
+        sql.append("group by date_format(data, '%Y-%m'), p.nome ");
+        sql.append("order by date_format(data, '%Y-%m') ");
+        Query query = em.createNativeQuery(sql.toString());
+        query.setParameter("produto", produto);
+        List<Object[]> resultado = query.getResultList();
         em.close();
         return resultado;
     }

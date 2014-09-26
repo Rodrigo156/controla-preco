@@ -8,7 +8,7 @@ import javax.faces.convert.FacesConverter;
 import net.marcoreis.controlapreco.entidades.Produto;
 import net.marcoreis.controlapreco.service.ServicoProduto;
 
-@FacesConverter(forClass = Produto.class)
+@FacesConverter(forClass = Produto.class, value = "conversorProduto")
 public class ConversorProduto implements Converter {
     private ServicoProduto servico = new ServicoProduto();
 
@@ -19,6 +19,7 @@ public class ConversorProduto implements Converter {
             Object obj = servico.findById(Produto.class, id);
             return obj;
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -29,6 +30,7 @@ public class ConversorProduto implements Converter {
             Produto p = (Produto) value;
             return String.valueOf(p.getId());
         } catch (Exception e) {
+            e.printStackTrace();
             return "";
         }
     }

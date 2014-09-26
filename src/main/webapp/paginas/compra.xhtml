@@ -48,7 +48,7 @@
 						completeMethod="#{controladorCompra.completarProduto}"
 						itemLabel="#{item.nome}" size="60" autocomplete="true"
 						required="true" dropdown="true" itemValue="#{item}" var="item"
-						forceSelection="true" label="Produto" />
+						forceSelection="true" label="Produto" converter="conversorProduto" />
 
 					<p:outputLabel value="Preço unitário:" />
 					<p:inputText value="#{controladorCompra.valorUnitario}"
@@ -72,8 +72,8 @@
 
 				<p:spacer height="6px" />
 
-				<p:dataTable value="#{controladorCompra.itens}" var="item"
-					id="tabelaItens">
+				<p:dataTable value="#{controladorCompra.itens}" var="item" rows="20"
+					paginator="true" paginatorAlwaysVisible="false" id="tabelaItens">
 
 					<f:facet name="header">
 						<p:outputLabel>Itens</p:outputLabel>

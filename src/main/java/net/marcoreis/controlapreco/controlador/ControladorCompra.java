@@ -51,7 +51,7 @@ public class ControladorCompra extends ControladorGenerico {
 
     private void carregarCompras() {
         String jpaql = "from Compra order by data desc";
-        compras = getServico().findAll(jpaql);
+        compras = getServico().find(jpaql);
     }
 
     private void atualizarValorTotal() {

@@ -9,6 +9,27 @@
 	value="#{facesContext.externalContext.request.contextPath}" />
 
 <h:head>
+
+	<h:outputScript> 
+    function fnGraficoHistoricoPrecos() {  
+    	this.cfg.legend.placement = 'outsideGrid';
+    }
+    
+    function fnGraficoGastosPorMes() {  
+    //this.cfg.seriesDefaults.rendererOptions.varyBarColor = true;
+    //this.cfg.seriesColors = ['#00749F', '#73C774', '#C7754C', '#17BDB8'];
+    //this.cfg.axes.xaxis.renderer = $.jqplot.DateAxisRenderer;
+    //this.cfg.axes.xaxis.min = '2014-05-01'
+    //this.cfg.axes.xaxis.tickOptions.formatString = '%m/%Y';
+    //this.cfg.axes.xaxis.tickInterval = '1 month';
+    //this.cfg.axes.xaxis.tickAngle = -60;
+    //this.cfg.stackSeries = true;
+    this.cfg.captureRightClick = true;
+    //this.cfg.seriesDefaults.fill = true;
+    } 
+
+</h:outputScript>
+
 	<link href="${ctx}/paginas/comum/estilo/geral.css" type="text/css"
 		rel="stylesheet" />
 	<title>Controla Preço</title>
@@ -38,10 +59,10 @@
 						href="relatorio-gastos-mensais.faces">Gastos mensais</a></li>
 					<li><a class="linkEsquerdo"
 						href="relatorio-gastos-categoria.faces">Gastos por categoria</a></li>
-					<li><a class="linkEsquerdo" href="">Comparativo entre
-							produtos</a></li>
-					<li><a class="linkEsquerdo" href="">Open-high-low-close
-							chart</a></li>
+					<li><a class="linkEsquerdo"
+						href="relatorio-historico-preco-produto.faces">Histórico de
+							preço</a></li>
+					<li><a class="linkEsquerdo" href="">OHLC</a></li>
 					<li><a class="linkEsquerdo" href="">Candlestick</a></li>
 					<li><a class="linkEsquerdo" href="">Donut</a></li>
 					<li><a class="linkEsquerdo" href="">Master/detail</a></li>

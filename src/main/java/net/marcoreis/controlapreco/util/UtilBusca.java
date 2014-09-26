@@ -6,9 +6,8 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -29,7 +28,7 @@ public class UtilBusca {
     public void reopen() {
         try {
             diretorio = FSDirectory.open(new File(Constantes.DIRETORIO_INDICE));
-            reader = DirectoryReader.open(diretorio);
+//            reader = DirectoryReader.open(diretorio);
             buscador = new IndexSearcher(reader);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -71,8 +70,8 @@ public class UtilBusca {
         TopDocs hits = null;
         try {
             long time = System.currentTimeMillis();
-            QueryParser parser = new QueryParser(Version.LUCENE_48, "",
-                    new StandardAnalyzer(Version.LUCENE_48));
+            QueryParser parser = new QueryParser(Version.LUCENE_36, "",
+                    new StandardAnalyzer(Version.LUCENE_36));
             Query query = parser.parse(consulta);
             hits = getBuscador().search(query, quantidadeLimiteRegistros);
             duracaoBusca = System.currentTimeMillis() - time;
