@@ -11,6 +11,12 @@
 
 <ui:composition template="comum/template-relatorio.xhtml">
 
+	<f:metadata>
+		<f:event listener="#{controladorRelatorio.initGraficoGastosMensaisBarras()}"
+			type="preRenderView" />
+		<f:event listener="#{controladorRelatorio.initGraficoGastosMensaisLinhas()}"
+			type="preRenderView" />
+	</f:metadata>
 
 	<ui:define name="body">
 		<h:form>
@@ -19,10 +25,16 @@
 
 			<p:spacer height="3px" />
 
-			<div id="painelCentro">
-				<p:chart type="line" style="width: 800px;"
-					model="#{controladorRelatorio.graficoDeGastosPorMes}" />
-			</div>
+			<p:tabView>
+				<p:tab title="Gráfico de linhas">
+					<p:chart type="line" style="width: 800px;"
+						model="#{controladorRelatorio.graficoDeGastosMensaisLinhas}" />
+				</p:tab>
+				<p:tab title="Gráfico de barras">
+					<p:chart type="bar" style="width: 800px;"
+						model="#{controladorRelatorio.graficoDeGastosMensaisBarras}" />
+				</p:tab>
+			</p:tabView>
 
 		</h:form>
 

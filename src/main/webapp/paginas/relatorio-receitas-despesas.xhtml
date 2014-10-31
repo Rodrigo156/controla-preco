@@ -13,22 +13,30 @@
 
 	<f:metadata>
 		<f:event
-			listener="#{controladorRelatorio.initGraficoConsumoEletricidade()}"
+			listener="#{controladorRelatorio.initGraficoReceitasDespesasLinhas()}"
+			type="preRenderView" />
+		<f:event
+			listener="#{controladorRelatorio.initGraficoReceitasDespesasBarras()}"
 			type="preRenderView" />
 	</f:metadata>
 
 	<ui:define name="body">
 		<h:form>
+
 			<p:messages id="messages" />
 
 			<p:spacer height="3px" />
 
-
-				<p:chart type="line"
-					model="#{controladorRelatorio.graficoConsumoEletricidade}"
-					style="width:800px;" datatipFormat="%$d" />
-
-
+			<p:tabView>
+				<p:tab title="Gráfico de linhas">
+					<p:chart type="line" style="width: 800px;"
+						model="#{controladorRelatorio.graficoReceitasDepesasLinhas}" />
+				</p:tab>
+				<p:tab title="Gráfico de barras">
+					<p:chart type="bar" style="width: 800px;"
+						model="#{controladorRelatorio.graficoReceitasDepesasBarras}" />
+				</p:tab>
+			</p:tabView>
 
 		</h:form>
 

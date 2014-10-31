@@ -14,7 +14,8 @@
 	<ui:define name="body">
 
 		<f:metadata>
-			<f:viewParam name="id" value="#{controladorProduto.produto}" />
+			<f:viewParam name="id" value="#{controladorProduto.produto}"
+				converter="conversorProduto" />
 		</f:metadata>
 
 		<h:form>
@@ -50,8 +51,8 @@
 					<p:commandButton value="Salvar"
 						actionListener="#{controladorProduto.salvar}" icon="ui-icon-disk"
 						update="messages,txtId" />
-					<p:commandButton value="Novo" action="produto?faces-redirect=true" ajax="false"
-						icon="ui-icon-document" />
+					<p:commandButton value="Novo" action="produto?faces-redirect=true"
+						ajax="false" icon="ui-icon-document" />
 					<p:commandButton value="Voltar" type="submit" immediate="true"
 						action="produtos?faces-redirect=true" ajax="false"
 						icon="ui-icon-arrowreturnthick-1-w" />

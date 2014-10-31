@@ -11,11 +11,59 @@
 <h:head>
 
 	<h:outputScript> 
+	$.jqplot.sprintf.thousandsSeparator = ".";
+	$.jqplot.sprintf.decimalMark = ",";
+
+	function fnGraficoDeBarrasVerticaisGastosPorCategoria() {
+		this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
+	    this.cfg.axes.yaxis.tickOptions.formatString = '%\'.2f';
+		this.cfg.seriesDefaults.rendererOptions.varyBarColor = true;
+	}
+
+	function fnGraficoDeBarrasHorizontaisGastosPorCategoria() {
+		this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
+	}
+	
+	function fnGraficoReceitasDespesasLinhas() {
+      	this.cfg.captureRightClick = true;
+      	this.cfg.showMarker = true;
+      	this.cfg.highlighter = {useAxesFormatters: false, tooltipAxes: 'x'};
+      	//this.cfg.seriesDefaults.fill = true;
+      	//this.cfg.seriesDefaults.pointLabels.stackedValue = true;
+      	this.cfg.title = 'Receitas X Despesas';
+      	this.cfg.axes.yaxis.min = 0;
+      	this.cfg.legend.placement = 'outside';
+ 	}
+	
+	function fnGraficoReceitasDespesasBarras() {
+      	this.cfg.captureRightClick = true;
+      	this.cfg.showMarker = true;
+      	this.cfg.highlighter = {useAxesFormatters: false, tooltipAxes: 'x'};
+      	this.cfg.axes.yaxis.min = 0;
+      	this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
+      	this.cfg.legend.placement = 'outside';
+ 	}
+	
     function fnGraficoHistoricoPrecos() {  
     	this.cfg.legend.placement = 'outsideGrid';
     }
     
-    function fnGraficoGastosPorMes() {  
+    function fnGraficoGastosMensaisLinhas() {  
+    //this.cfg.seriesDefaults.rendererOptions.varyBarColor = true;
+    //this.cfg.seriesColors = ['#00749F', '#73C774', '#C7754C', '#17BDB8'];
+    //this.cfg.axes.xaxis.renderer = $.jqplot.DateAxisRenderer;
+    //this.cfg.axes.xaxis.min = '2014-05-01'
+    //this.cfg.axes.xaxis.tickOptions.formatString = '%m/%Y';
+    //this.cfg.axes.xaxis.tickInterval = '1 month';
+    //this.cfg.axes.xaxis.tickAngle = -60;
+    //this.cfg.stackSeries = true;
+    //this.cfg.seriesDefaults.fill = true;
+    	this.cfg.axes.yaxis.min = 0;
+    	this.cfg.captureRightClick = true;
+    	this.cfg.seriesDefaults.rendererOptions.smooth = true;
+    } 
+
+    function fnGraficoGastosMensaisBarras() {  
     //this.cfg.seriesDefaults.rendererOptions.varyBarColor = true;
     //this.cfg.seriesColors = ['#00749F', '#73C774', '#C7754C', '#17BDB8'];
     //this.cfg.axes.xaxis.renderer = $.jqplot.DateAxisRenderer;
@@ -26,7 +74,13 @@
     //this.cfg.stackSeries = true;
     this.cfg.captureRightClick = true;
     //this.cfg.seriesDefaults.fill = true;
+    this.cfg.seriesDefaults.rendererOptions.smooth = true;
+     this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
     } 
+    
+    function fnGraficoConsumoEletricidade() {
+      this.cfg.seriesDefaults.rendererOptions.smooth = true;
+    }
 
 </h:outputScript>
 
@@ -62,12 +116,15 @@
 					<li><a class="linkEsquerdo"
 						href="relatorio-historico-preco-produto.faces">Histórico de
 							preço</a></li>
+					<li><a class="linkEsquerdo"
+						href="relatorio-receitas-despesas.faces">Receitas X despesas</a></li>
+					<li><a class="linkEsquerdo"
+						href="relatorio-receitas-despesas-gauge.faces">Receitas /
+							despesas</a></li>
 					<li><a class="linkEsquerdo" href="">OHLC</a></li>
 					<li><a class="linkEsquerdo" href="">Candlestick</a></li>
 					<li><a class="linkEsquerdo" href="">Donut</a></li>
 					<li><a class="linkEsquerdo" href="">Master/detail</a></li>
-					<li><a class="linkEsquerdo" href="">Performance financeira</a>
-					</li>
 					<li><a class="linkEsquerdo" href="">Tempo real</a></li>
 					<li><a class="linkEsquerdo" href="">Bolhas</a></li>
 				</ul>

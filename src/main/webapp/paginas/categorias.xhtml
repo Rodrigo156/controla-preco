@@ -21,8 +21,8 @@
 				style="margin-left: 24%; margin-right: 24%;">
 
 				<p:dataTable var="item" value="#{controladorCategoria.categorias}"
-					id="tabelaCategorias" rows="10" paginator="true"
-					paginatorAlwaysVisible="false">
+					sortBy="##{item.nome}" id="tabelaCategorias" rows="10"
+					paginator="true" paginatorAlwaysVisible="false">
 					<p:column headerText="Nome">
 						<h:outputText value="#{item.nome}" />
 					</p:column>

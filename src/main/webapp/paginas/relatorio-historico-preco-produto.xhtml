@@ -11,6 +11,15 @@
 
 <ui:composition template="comum/template-relatorio.xhtml">
 
+	<f:metadata>
+		<f:event
+			listener="#{controladorRelatorio.initGraficoHistoricoPrecoProduto()}"
+			type="preRenderView" />
+		<f:event
+			listener="#{controladorRelatorio.initProdutos()}"
+			type="preRenderView" />
+	</f:metadata>
+
 	<ui:define name="body">
 		<h:form>
 			<p:messages id="messages" />
@@ -35,14 +44,12 @@
 					</p:column>
 
 				</p:selectCheckboxMenu>
-				
-				<br />
-				<br />
-				<br />
-				
+
+				<br /> <br /> <br />
+
 				<p:chart type="line" id="graficoHistoricoPrecoProduto"
 					model="#{controladorRelatorio.dadosProdutosSelecionados}"
-					style="width:600px;" />
+					style="width:1200px; height:600px;" />
 
 
 			</div>

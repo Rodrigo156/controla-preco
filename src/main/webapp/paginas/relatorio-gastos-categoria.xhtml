@@ -11,22 +11,52 @@
 
 <ui:composition template="comum/template-relatorio.xhtml">
 
+	<f:metadata>
+		<f:event
+			listener="#{controladorRelatorio.initGraficoPizzaGastosPorCategoria()}"
+			type="preRenderView" />
+		<f:event
+			listener="#{controladorRelatorio.initGraficoBarrasVerticaisGastosPorCategoria()}"
+			type="preRenderView" />
+		<f:event
+			listener="#{controladorRelatorio.initGraficoBarrasHorizontaisGastosPorCategoria()}"
+			type="preRenderView" />
+	</f:metadata>
+
 	<ui:define name="body">
 		<h:form>
 			<p:messages id="messages" />
 
 			<p:spacer height="3px" />
 
-			<p:panel header="Gráficos"
-				style="margin-left: 14%; margin-right: 14%;">
 
-				<div id="painelCentro">
-					<p:chart type="pie"
-						model="#{controladorRelatorio.graficoDeGastosPorCategoria}" />
-				</div>
+			<p:panelGrid columns="3">
+				<p:outputLabel value="Data (mm/aaaa)" />
+				<p:inputText value="#{controladorRelatorio.mesAnoReferencia}"
+					label="Mês/Ano" required="true"
+					requiredMessage="Preencha em formato yyyy-MM" />
+				<p:commandButton value="Atualizar"
+					actionListener="#{controladorRelatorio.atualizarGraficosDeGastosPorCategoria()}"
+					update="graficos, messages" />
+			</p:panelGrid>
+
+			<p:tabView id="graficos">
+				<p:tab title="Gráfico de pizza">
+					<p:chart type="pie" id="graficoDePizzaGastosPorCategoria" style="width:600px;"
+						model="#{controladorRelatorio.graficoDePizzaGastosPorCategoria}" />
+				</p:tab>
+				<p:tab title="Gráfico de barras verticais">
+					<p:chart type="bar" id="graficoDeBarrasVerticaisGastosPorCategoria"
+						model="#{controladorRelatorio.graficoDeBarrasVerticaisGastosPorCategoria}" />
+				</p:tab>
+				<p:tab title="Gráfico de barras horizontais">
+					<p:chart type="bar"
+						id="graficoDeBarrasHorizontaisGastosPorCategoria"
+						model="#{controladorRelatorio.graficoDeBarrasHorizontaisGastosPorCategoria}" />
+				</p:tab>
+			</p:tabView>
 
 
-			</p:panel>
 
 		</h:form>
 

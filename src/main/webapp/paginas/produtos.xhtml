@@ -29,7 +29,7 @@
 				<p:spacer height="6px" />
 
 				<p:dataTable var="item" value="#{controladorProduto.produtos}"
-					rows="10" paginator="true" paginatorAlwaysVisible="false" 
+					rows="10" paginator="true" paginatorAlwaysVisible="false"
 					id="tabelaProdutos" sortBy="#{item.nome}">
 					<p:column headerText="Nome" sortBy="#{item.nome}">
 						<h:outputText value="#{item.nome}" />
