@@ -21,6 +21,7 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.DateAxis;
+import org.primefaces.model.chart.HorizontalBarChartModel;
 import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.MeterGaugeChartModel;
@@ -42,7 +43,7 @@ public class ControladorRelatorio extends ControladorGenerico {
     private BarChartModel graficoDeBarrasGastosMensais;
     private PieChartModel graficoDePizzaGastosPorCategoria;
     private BarChartModel graficoDeBarrasVerticaisGastosPorCategoria;
-    private BarChartModel graficoDeBarrasHorizontaisGastosPorCategoria;
+    private HorizontalBarChartModel graficoDeBarrasHorizontaisGastosPorCategoria;
     private LineChartModel graficoDeLinhasConsumoEletricidade;
     private CartesianChartModel graficoDeLinhasProdutosSelecionados;
     private CartesianChartModel graficoDeBarrasReceitasDepesas;
@@ -265,7 +266,7 @@ public class ControladorRelatorio extends ControladorGenerico {
     public void initGraficoPizzaGastosPorCategoria() {
         graficoDePizzaGastosPorCategoria = new PieChartModel();
         List<Object[]> gastos = getServico().consultarGastosPorCategoria(
-                getMesAnoReferencia(), "valor");
+                getMesAnoReferencia(), "nomeCategoria");
         if (gastos.size() == 0) {
             graficoDePizzaGastosPorCategoria.set("", 0);
         }
@@ -303,12 +304,12 @@ public class ControladorRelatorio extends ControladorGenerico {
 
     public void initGraficoBarrasHorizontaisGastosPorCategoria()
             throws ParseException {
-        graficoDeBarrasHorizontaisGastosPorCategoria = new BarChartModel();
+        graficoDeBarrasHorizontaisGastosPorCategoria = new HorizontalBarChartModel();
         graficoDeBarrasHorizontaisGastosPorCategoria
                 .setTitle("Gastos por categoria em " + getMesAnoReferencia());
-        Axis yaxis = graficoDeBarrasHorizontaisGastosPorCategoria
-                .getAxis(AxisType.Y);
-        yaxis.setLabel("Total (R$)");
+        Axis xaxis = graficoDeBarrasHorizontaisGastosPorCategoria
+                .getAxis(AxisType.X);
+        xaxis.setLabel("Total (R$)");
         List<Object[]> gastos = getServico().consultarGastosPorCategoria(
                 getMesAnoReferencia(), "valor");
         ChartSeries serie = new ChartSeries();
@@ -531,7 +532,7 @@ public class ControladorRelatorio extends ControladorGenerico {
         return graficoDeBarrasVerticaisGastosPorCategoria;
     }
 
-    public BarChartModel getGraficoDeBarrasHorizontaisGastosPorCategoria() {
+    public HorizontalBarChartModel getGraficoDeBarrasHorizontaisGastosPorCategoria() {
         return graficoDeBarrasHorizontaisGastosPorCategoria;
     }
 }

@@ -21,7 +21,9 @@
 	}
 
 	function fnGraficoDeBarrasHorizontaisGastosPorCategoria() {
-		this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
+		this.cfg.axes.yaxis.tickOptions.labelPosition = 'right';
+	    this.cfg.axes.xaxis.tickOptions.formatString = '%\'.2f';
+		this.cfg.seriesDefaults.rendererOptions.varyBarColor = true;
 	}
 	
 	function fnGraficoReceitasDespesasLinhas() {
