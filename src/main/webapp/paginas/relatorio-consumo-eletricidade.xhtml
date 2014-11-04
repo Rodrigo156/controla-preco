@@ -13,7 +13,7 @@
 
 	<f:metadata>
 		<f:event
-			listener="#{controladorRelatorio.initGraficoConsumoEletricidade()}"
+			listener="#{controladorRelatorio.initGraficoDeLinhasConsumoEletricidade()}"
 			type="preRenderView" />
 	</f:metadata>
 
@@ -24,9 +24,9 @@
 			<p:spacer height="3px" />
 
 
-				<p:chart type="line"
-					model="#{controladorRelatorio.graficoConsumoEletricidade}"
-					style="width:800px;" datatipFormat="%$d" />
+			<p:chart type="line"
+				model="#{controladorRelatorio.graficoDeLinhasConsumoEletricidade}"
+				style="width:800px;" />
 
 
 

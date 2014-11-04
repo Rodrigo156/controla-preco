@@ -49,9 +49,13 @@ public class ControladorRelatorio extends ControladorGenerico {
     private CartesianChartModel graficoDeBarrasReceitasDepesas;
     private CartesianChartModel graficoDeLinhasReceitasDepesas;
     private MeterGaugeChartModel graficoGaugeReceitasDepesas;
+    //
+    private SimpleDateFormat sdfMesPorExtenso = new SimpleDateFormat("MMMMM",
+            new Locale("pt", "BR"));
     private SimpleDateFormat sdfMesAno = new SimpleDateFormat("MM/yyyy");
     private SimpleDateFormat sdfMes = new SimpleDateFormat("MM");
     private SimpleDateFormat sdfAnoMesDia = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat sdfDiaMesAno = new SimpleDateFormat("dd/MM/yyyy");
 
     @PostConstruct
     public void init() {
@@ -59,7 +63,7 @@ public class ControladorRelatorio extends ControladorGenerico {
                 .format(new Date(System.currentTimeMillis()));
     }
 
-    public void initGraficoHistoricoPrecoProduto() {
+    public void initGraficoDeLinhasHistoricoPrecoProduto() {
         graficoDeLinhasProdutosSelecionados = new LineChartModel();
         Date dataInicio = new Date(System.currentTimeMillis());
         for (Produto p : getProdutosSelecionados()) {
@@ -109,22 +113,19 @@ public class ControladorRelatorio extends ControladorGenerico {
         graficoDeLinhasProdutosSelecionados.setTitle("Histórico de preços");
         graficoDeLinhasProdutosSelecionados.setLegendPosition("ne");
         graficoDeLinhasProdutosSelecionados
-                .setExtender("fnGraficoHistoricoPrecos");
+                .setExtender("fnGraficoDeLinhasHistoricoPrecos");
     }
 
-    public void initGraficoReceitasDespesasBarras() throws ParseException {
-        SimpleDateFormat sdfAnoMes = new SimpleDateFormat("yyyy-MM");
-        SimpleDateFormat sdfMes = new SimpleDateFormat("MMMMM", new Locale(
-                "pt", "BR"));
+    public void initGraficoDeBarrasReceitasDespesas() throws ParseException {
         graficoDeBarrasReceitasDepesas = new BarChartModel();
         List<Object[]> receitas = getServico().consultarHistoricoReceitas();
         ChartSeries serieReceitas = new ChartSeries();
         Date dataInicio = new Date(System.currentTimeMillis());
-        Date dataFim = sdfAnoMes.parse("2014-01");
+        Date dataFim = sdfMesAno.parse("2014-01");
         int i = 0;
         for (Object[] dados : receitas) {
-            Date dataDate = sdfAnoMes.parse(dados[0].toString());
-            String data = sdfMes.format(dataDate);
+            Date dataDate = sdfMesAno.parse(dados[0].toString());
+            String data = sdfMesPorExtenso.format(dataDate);
             Double valor = (Double) dados[1];
             if (dataDate.before(dataInicio)) {
                 dataInicio = dataDate;
@@ -139,8 +140,8 @@ public class ControladorRelatorio extends ControladorGenerico {
         ChartSeries serieDespesas = new ChartSeries();
         i = 0;
         for (Object[] dados : gastos) {
-            Date dataDate = sdfAnoMes.parse(dados[0].toString());
-            String data = sdfMes.format(dataDate);
+            Date dataDate = sdfMesAno.parse(dados[0].toString());
+            String data = sdfMesPorExtenso.format(dataDate);
             Double valor = (Double) dados[1];
             if (dataDate.before(dataInicio)) {
                 dataInicio = dataDate;
@@ -157,10 +158,10 @@ public class ControladorRelatorio extends ControladorGenerico {
         graficoDeBarrasReceitasDepesas.addSeries(serieReceitas);
         graficoDeBarrasReceitasDepesas.setLegendPosition("ne");
         graficoDeBarrasReceitasDepesas
-                .setExtender("fnGraficoReceitasDespesasBarras");
+                .setExtender("fnGraficoDeBarrasReceitasDespesas");
     }
 
-    public void initGraficoReceitasDespesasLinhas() throws ParseException {
+    public void initGraficoDeLinhasReceitasDespesas() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         graficoDeLinhasReceitasDepesas = new LineChartModel();
         List<Object[]> receitas = getServico().consultarHistoricoReceitas();
@@ -211,14 +212,14 @@ public class ControladorRelatorio extends ControladorGenerico {
         graficoDeLinhasReceitasDepesas.addSeries(serieReceitas);
         graficoDeLinhasReceitasDepesas.setLegendPosition("ne");
         graficoDeLinhasReceitasDepesas
-                .setExtender("fnGraficoReceitasDespesasLinhas");
+                .setExtender("fnGraficoDeLinhasReceitasDespesas");
     }
 
     public void initProdutos() {
         produtos = getServico().find("from Produto order by nome");
     }
 
-    public void initGraficoReceitasDespesasGauge() {
+    public void initGraficoGaugeReceitasDespesas() {
         //
         List<Number> intervalos = new ArrayList<Number>() {
             {
@@ -256,14 +257,14 @@ public class ControladorRelatorio extends ControladorGenerico {
 
     public void atualizarGraficosDeGastosPorCategoria() {
         try {
-            initGraficoPizzaGastosPorCategoria();
-            initGraficoBarrasVerticaisGastosPorCategoria();
+            initGraficoDePizzaGastosPorCategoria();
+            initGraficoDeBarrasVerticaisGastosPorCategoria();
         } catch (ParseException e) {
             logger.error(e);
         }
     }
 
-    public void initGraficoPizzaGastosPorCategoria() {
+    public void initGraficoDePizzaGastosPorCategoria() {
         graficoDePizzaGastosPorCategoria = new PieChartModel();
         List<Object[]> gastos = getServico().consultarGastosPorCategoria(
                 getMesAnoReferencia(), "nomeCategoria");
@@ -280,7 +281,7 @@ public class ControladorRelatorio extends ControladorGenerico {
         graficoDePizzaGastosPorCategoria.setLegendPosition("e");
     }
 
-    public void initGraficoBarrasVerticaisGastosPorCategoria()
+    public void initGraficoDeBarrasVerticaisGastosPorCategoria()
             throws ParseException {
         graficoDeBarrasVerticaisGastosPorCategoria = new BarChartModel();
         graficoDeBarrasVerticaisGastosPorCategoria
@@ -302,7 +303,7 @@ public class ControladorRelatorio extends ControladorGenerico {
                 .setExtender("fnGraficoDeBarrasVerticaisGastosPorCategoria");
     }
 
-    public void initGraficoBarrasHorizontaisGastosPorCategoria()
+    public void initGraficoDeBarrasHorizontaisGastosPorCategoria()
             throws ParseException {
         graficoDeBarrasHorizontaisGastosPorCategoria = new HorizontalBarChartModel();
         graficoDeBarrasHorizontaisGastosPorCategoria
@@ -324,7 +325,7 @@ public class ControladorRelatorio extends ControladorGenerico {
                 .setExtender("fnGraficoDeBarrasHorizontaisGastosPorCategoria");
     }
 
-    public void initGraficoGastosMensaisLinhas() {
+    public void initGraficoDeLinhasGastosMensais() throws ParseException {
         // 1
         graficoDeLinhasGastosMensais = new LineChartModel();
         // 2
@@ -336,13 +337,19 @@ public class ControladorRelatorio extends ControladorGenerico {
         List<Object[]> gastos = getServico().consultarGastosPorMes();
         // 4
         ChartSeries serie = new ChartSeries();
+        // A data de início deve ser definida, caso contrário o jqPlot não
+        // consegue
+        // montar o gráfico
+        // As datas devem estar no formato yyyy-MM-dd.
         String dataInicio = null;
         for (Object[] dados : gastos) {
-            String data = dados[0] + "-01";
+            String dataString = "01/" + dados[0];
+            String dataInvertida = sdfAnoMesDia.format(sdfDiaMesAno
+                    .parse(dataString));
             Number valor = (Number) dados[1];
-            serie.set(data, valor);
+            serie.set(dataInvertida, valor);
             if (dataInicio == null) {
-                dataInicio = data;
+                dataInicio = dataInvertida;
             }
         }
         // 5
@@ -356,40 +363,32 @@ public class ControladorRelatorio extends ControladorGenerico {
         graficoDeLinhasGastosMensais.addSeries(serie);
         graficoDeLinhasGastosMensais.setShowDatatip(false);
         graficoDeLinhasGastosMensais
-                .setExtender("fnGraficoGastosMensaisLinhas");
+                .setExtender("fnGraficoDeLinhasGastosMensais");
     }
 
-    public void initGraficoGastosMensaisBarras() throws ParseException {
-        // 1
-        graficoDeBarrasGastosMensais = new BarChartModel();
-        SimpleDateFormat sdfAnoMes = new SimpleDateFormat("yyyy-MM");
-        SimpleDateFormat sdfMes = new SimpleDateFormat("MMMMM", new Locale(
-                "pt", "BR"));
-        // 2
-        Axis xaxis = graficoDeBarrasGastosMensais.getAxis(AxisType.X);
-        xaxis.setLabel("Mês");
-        Axis yaxis = graficoDeBarrasGastosMensais.getAxis(AxisType.Y);
-        yaxis.setLabel("Total (R$)");
-        // 3
-        List<Object[]> gastos = getServico().consultarGastosPorMes();
-        // 4
-        ChartSeries serie = new ChartSeries();
-        String dataInicio = null;
-        for (Object[] dados : gastos) {
-            Date dataDate = sdfAnoMes.parse(dados[0].toString());
-            String data = sdfMes.format(dataDate);
-            Number valor = (Number) dados[1];
-            serie.set(data, valor);
-            if (dataInicio == null) {
-                dataInicio = data;
+    public void initGraficoDeBarrasGastosMensais() {
+        try {
+            graficoDeBarrasGastosMensais = new BarChartModel();
+            Axis xaxis = graficoDeBarrasGastosMensais.getAxis(AxisType.X);
+            xaxis.setLabel("Mês");
+            Axis yaxis = graficoDeBarrasGastosMensais.getAxis(AxisType.Y);
+            yaxis.setLabel("Total (R$)");
+            List<Object[]> gastos = getServico().consultarGastosPorMes();
+            ChartSeries serie = new ChartSeries();
+            for (Object[] dados : gastos) {
+                Date dataDate = sdfMesAno.parse(dados[0].toString());
+                String data = sdfMesPorExtenso.format(dataDate);
+                Number valor = (Number) dados[1];
+                serie.set(data, valor);
             }
+            graficoDeBarrasGastosMensais.addSeries(serie);
+            graficoDeBarrasGastosMensais.setTitle("Gastos por mês");
+            graficoDeBarrasGastosMensais.setShowPointLabels(true);
+            graficoDeBarrasGastosMensais
+                    .setExtender("fnGraficoDeBarrasGastosMensais");
+        } catch (ParseException e) {
+            logger.error(e);
         }
-        // 6
-        graficoDeBarrasGastosMensais.addSeries(serie);
-        graficoDeBarrasGastosMensais.setTitle("Gastos por mês");
-        graficoDeBarrasGastosMensais.setShowPointLabels(true);
-        graficoDeBarrasGastosMensais
-                .setExtender("fnGraficoGastosMensaisBarras");
     }
 
     private String recuperarMesAnterior(String dataInicio) {
@@ -415,8 +414,8 @@ public class ControladorRelatorio extends ControladorGenerico {
         }
     }
 
-    public void initGraficoConsumoEletricidade() {
-        //
+    public void initGraficoDeLinhasConsumoEletricidade() {
+        // 1
         LineChartSeries serie = new LineChartSeries();
         serie.set("2013-07-01", 133);
         serie.set("2013-08-01", 123);
@@ -431,23 +430,24 @@ public class ControladorRelatorio extends ControladorGenerico {
         serie.set("2014-05-01", 157);
         serie.set("2014-06-01", 98);
         serie.set("2014-07-01", 145);
-        //
+        // 2
         graficoDeLinhasConsumoEletricidade = new LineChartModel();
         String titulo = "Consumo de eletricidade (kWh)";
         graficoDeLinhasConsumoEletricidade.setTitle(titulo);
         graficoDeLinhasConsumoEletricidade.addSeries(serie);
-        //
+        // 3
         graficoDeLinhasConsumoEletricidade.getAxis(AxisType.Y).setMin(0);
-        //
+        // 4
         DateAxis eixoData = new DateAxis();
         eixoData.setTickFormat("%m/%Y");
         eixoData.setTickInterval("1 month");
         eixoData.setMin("2013-06-01");
         eixoData.setTickAngle(-60);
-        //
+        // 5
         graficoDeLinhasConsumoEletricidade.getAxes().put(AxisType.X, eixoData);
+        // 6
         graficoDeLinhasConsumoEletricidade
-                .setExtender("fnGraficoConsumoEletricidade");
+                .setExtender("fnDeLinhasGraficoConsumoEletricidade");
     }
 
     public void setProdutos(List<Produto> produtos) {
@@ -472,23 +472,23 @@ public class ControladorRelatorio extends ControladorGenerico {
         return produtosSelecionados;
     }
 
-    public CartesianChartModel getDadosProdutosSelecionados() {
+    public CartesianChartModel getGraficoDeLinhasProdutosSelecionados() {
         return graficoDeLinhasProdutosSelecionados;
     }
 
     public void carregarHistoricoPrecoProduto() {
         try {
-            initGraficoHistoricoPrecoProduto();
+            initGraficoDeLinhasHistoricoPrecoProduto();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public BarChartModel getGraficoDeGastosMensaisBarras() {
+    public BarChartModel getGraficoDeBarrasGastosMensais() {
         return graficoDeBarrasGastosMensais;
     }
 
-    public LineChartModel getGraficoDeGastosMensaisLinhas() {
+    public LineChartModel getGraficoDeLinhasGastosMensais() {
         return graficoDeLinhasGastosMensais;
     }
 
@@ -512,19 +512,19 @@ public class ControladorRelatorio extends ControladorGenerico {
         return mesAnoReferencia;
     }
 
-    public LineChartModel getGraficoConsumoEletricidade() {
+    public LineChartModel getGraficoDeLinhasConsumoEletricidade() {
         return graficoDeLinhasConsumoEletricidade;
     }
 
-    public CartesianChartModel getGraficoReceitasDepesasBarras() {
+    public CartesianChartModel getGraficoDeBarrasReceitasDepesasBarras() {
         return graficoDeBarrasReceitasDepesas;
     }
 
-    public CartesianChartModel getGraficoReceitasDepesasLinhas() {
+    public CartesianChartModel getGraficoDeLinhasReceitasDepesas() {
         return graficoDeLinhasReceitasDepesas;
     }
 
-    public MeterGaugeChartModel getGraficoReceitasDepesasGauge() {
+    public MeterGaugeChartModel getGraficoGaugeReceitasDepesas() {
         return graficoGaugeReceitasDepesas;
     }
 
