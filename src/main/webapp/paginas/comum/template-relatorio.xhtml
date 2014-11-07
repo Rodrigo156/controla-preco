@@ -31,19 +31,21 @@
       	this.cfg.showMarker = true;
       	this.cfg.highlighter = {useAxesFormatters: false, tooltipAxes: 'x'};
       	//this.cfg.seriesDefaults.fill = true;
-      	//this.cfg.seriesDefaults.pointLabels.stackedValue = true;
       	this.cfg.title = 'Receitas X Despesas';
       	this.cfg.axes.yaxis.min = 0;
       	this.cfg.legend.placement = 'outside';
  	}
 	
 	function fnGraficoDeBarrasReceitasDespesas() {
-      	this.cfg.captureRightClick = true;
-      	this.cfg.showMarker = true;
-      	this.cfg.highlighter = {useAxesFormatters: false, tooltipAxes: 'x'};
-      	this.cfg.axes.yaxis.min = 0;
+      	//this.cfg.captureRightClick = true;
+      	this.cfg.showMarker = false;
+      	//this.cfg.highlighter = {useAxesFormatters: false, tooltipAxes: 'x'};
+      	//this.cfg.axes.yaxis.min = 0;
+      	//this.cfg.legend.placement = 'outside';
+      	//this.cfg.seriesDefaults.pointLabels.stackedValue = true;
       	this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
-      	this.cfg.legend.placement = 'outside';
+      	this.cfg.stackSeries = true;
+      	this.cfg.axes.yaxis.tickOptions.formatString = '%\'.2f';
  	}
 	
     function fnGraficoDeLinhasHistoricoPrecos() {  
@@ -76,6 +78,9 @@
     
     function fnGraficoDeLinhasConsumoEletricidade() {
 	    this.cfg.seriesDefaults.rendererOptions.smooth = true;
+    }
+    
+    function fnGraficoGaugeReceitasDespesas() {
     }
 
 </h:outputScript>

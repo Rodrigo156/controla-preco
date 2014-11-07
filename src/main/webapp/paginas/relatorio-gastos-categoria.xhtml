@@ -13,13 +13,13 @@
 
 	<f:metadata>
 		<f:event
-			listener="#{controladorRelatorio.initGraficoPizzaGastosPorCategoria()}"
+			listener="#{controladorRelatorio.initGraficoDePizzaGastosPorCategoria()}"
 			type="preRenderView" />
 		<f:event
-			listener="#{controladorRelatorio.initGraficoBarrasVerticaisGastosPorCategoria()}"
+			listener="#{controladorRelatorio.initGraficoDeBarrasVerticaisGastosPorCategoria()}"
 			type="preRenderView" />
 		<f:event
-			listener="#{controladorRelatorio.initGraficoBarrasHorizontaisGastosPorCategoria()}"
+			listener="#{controladorRelatorio.initGraficoDeBarrasHorizontaisGastosPorCategoria()}"
 			type="preRenderView" />
 	</f:metadata>
 
@@ -42,7 +42,8 @@
 
 			<p:tabView id="graficos">
 				<p:tab title="Gráfico de pizza">
-					<p:chart type="pie" id="graficoDePizzaGastosPorCategoria" style="width:600px;"
+					<p:chart type="pie" id="graficoDePizzaGastosPorCategoria"
+						style="width:600px;"
 						model="#{controladorRelatorio.graficoDePizzaGastosPorCategoria}" />
 				</p:tab>
 				<p:tab title="Gráfico de barras verticais">

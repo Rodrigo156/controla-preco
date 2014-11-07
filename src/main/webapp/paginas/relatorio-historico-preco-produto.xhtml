@@ -13,10 +13,9 @@
 
 	<f:metadata>
 		<f:event
-			listener="#{controladorRelatorio.initGraficoHistoricoPrecoProduto()}"
+			listener="#{controladorRelatorio.initGraficoDeLinhasHistoricoPrecoProduto()}"
 			type="preRenderView" />
-		<f:event
-			listener="#{controladorRelatorio.initProdutos()}"
+		<f:event listener="#{controladorRelatorio.initProdutos()}"
 			type="preRenderView" />
 	</f:metadata>
 
@@ -48,8 +47,8 @@
 				<br /> <br /> <br />
 
 				<p:chart type="line" id="graficoHistoricoPrecoProduto"
-					model="#{controladorRelatorio.dadosProdutosSelecionados}"
-					style="width:1200px; height:600px;" />
+					model="#{controladorRelatorio.graficoDeLinhasProdutosSelecionados}"
+					style="width:1000px; height:400px;" />
 
 
 			</div>

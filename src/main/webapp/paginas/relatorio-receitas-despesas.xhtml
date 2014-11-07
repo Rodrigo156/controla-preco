@@ -13,10 +13,10 @@
 
 	<f:metadata>
 		<f:event
-			listener="#{controladorRelatorio.initGraficoReceitasDespesasLinhas()}"
+			listener="#{controladorRelatorio.initGraficoDeLinhasReceitasDespesas()}"
 			type="preRenderView" />
 		<f:event
-			listener="#{controladorRelatorio.initGraficoReceitasDespesasBarras()}"
+			listener="#{controladorRelatorio.initGraficoDeBarrasReceitasDespesas()}"
 			type="preRenderView" />
 	</f:metadata>
 
@@ -30,11 +30,11 @@
 			<p:tabView>
 				<p:tab title="Gráfico de linhas">
 					<p:chart type="line" style="width: 800px;"
-						model="#{controladorRelatorio.graficoReceitasDepesasLinhas}" />
+						model="#{controladorRelatorio.graficoDeLinhasReceitasDepesas}" />
 				</p:tab>
 				<p:tab title="Gráfico de barras">
-					<p:chart type="bar" style="width: 800px;"
-						model="#{controladorRelatorio.graficoReceitasDepesasBarras}" />
+					<p:chart type="bar" style="width: 600px;"
+						model="#{controladorRelatorio.graficoDeBarrasReceitasDepesas}" />
 				</p:tab>
 			</p:tabView>
 

@@ -74,20 +74,22 @@ public class ControladorRelatorio extends ControladorGenerico {
                 String nomeProduto = dados[0].toString();
                 Double valor = (Double) dados[1];
                 // Para usar um eixo com data, os valores devem estar em formato
-                // yyyy-MM-dd, por isso adicionamos
-                // o "-01" no final
-                String data = dados[2] + "-01";
-                Date dataDate;
+                // yyyy-MM-dd
+                String dataString = "01/" + dados[2];
+                String dataInvertida;
                 try {
-                    dataDate = sdfAnoMesDia.parse(data);
+                    dataInvertida = sdfAnoMesDia.format(sdfDiaMesAno
+                            .parse(dataString));
+                    Date dataDate;
+                    dataDate = sdfAnoMesDia.parse(dataInvertida);
                     if (dataDate.before(dataInicio)) {
                         dataInicio = dataDate;
                     }
+                    serie.setLabel(nomeProduto);
+                    serie.set(dataInvertida, valor);
                 } catch (ParseException e) {
-                    e.printStackTrace();
+                    logger.error(e);
                 }
-                serie.setLabel(nomeProduto);
-                serie.set(data, valor);
             }
             if (historico.size() > 0) {
                 graficoDeLinhasProdutosSelecionados.addSeries(serie);
@@ -121,7 +123,7 @@ public class ControladorRelatorio extends ControladorGenerico {
         List<Object[]> receitas = getServico().consultarHistoricoReceitas();
         ChartSeries serieReceitas = new ChartSeries();
         Date dataInicio = new Date(System.currentTimeMillis());
-        Date dataFim = sdfMesAno.parse("2014-01");
+        Date dataFim = sdfMesAno.parse("01/2014");
         int i = 0;
         for (Object[] dados : receitas) {
             Date dataDate = sdfMesAno.parse(dados[0].toString());
@@ -170,25 +172,29 @@ public class ControladorRelatorio extends ControladorGenerico {
         Date dataFim = sdf.parse("2014-01-01");
         int i = 0;
         for (Object[] dados : receitas) {
-            String data = dados[0] + "-01";
+            String dataString = "01/" + dados[0];
+            String dataInvertida = sdfAnoMesDia.format(sdfDiaMesAno
+                    .parse(dataString));
             Double valor = (Double) dados[1];
-            Date dataDate = sdf.parse(data);
+            Date dataDate = sdf.parse(dataInvertida);
             if (dataDate.before(dataInicio)) {
                 dataInicio = dataDate;
             }
             if (dataDate.after(dataFim)) {
                 dataFim = dataDate;
             }
-            serieReceitas.set(data, valor);
+            serieReceitas.set(dataInvertida, valor);
         }
         serieReceitas.setLabel("Receitas");
         List<Object[]> gastos = getServico().consultarGastosPorMes();
         ChartSeries serieDespesas = new LineChartSeries();
         i = 0;
         for (Object[] dados : gastos) {
-            String data = dados[0] + "-01";
+            String dataString = "01/" + dados[0];
+            String dataInvertida = sdfAnoMesDia.format(sdfDiaMesAno
+                    .parse(dataString));
             Double valor = (Double) dados[1];
-            Date dataDate = sdf.parse(data);
+            Date dataDate = sdf.parse(dataInvertida);
             if (dataDate.before(dataInicio)) {
                 dataInicio = dataDate;
             }
@@ -196,7 +202,7 @@ public class ControladorRelatorio extends ControladorGenerico {
                 dataFim = dataDate;
             }
 
-            serieDespesas.set(data, valor);
+            serieDespesas.set(dataInvertida, valor);
         }
         serieDespesas.setLabel("Despesas");
         //
@@ -223,8 +229,6 @@ public class ControladorRelatorio extends ControladorGenerico {
         //
         List<Number> intervalos = new ArrayList<Number>() {
             {
-                // add(-10);
-                // add(-30);
                 add(10);
                 add(30);
                 add(50);
@@ -235,23 +239,28 @@ public class ControladorRelatorio extends ControladorGenerico {
                 getMesAnoReferencia());
         Double receitas = getServico().consultarReceitasMes(
                 getMesAnoReferencia());
-        Double percentualEconomizado = 0d;
 
-        if (receitas > 0 && despesas > 0 && receitas > despesas) {
-            percentualEconomizado = receitas / despesas;
-        } else if (receitas > 0 && despesas > 0 && receitas < despesas) {
-            percentualEconomizado = receitas / despesas * -1;
-        }
+        // if (receitas > 0 && despesas > 0 && receitas > despesas) {
+        // percentualEconomizado = receitas / despesas;
+        // } else if (receitas > 0 && despesas > 0 && receitas < despesas) {
+        // percentualEconomizado = receitas / despesas * -1;
+        // }
+
+        int percentualEconomizado = (int) ((despesas * -100) / receitas) + 100;
 
         if (percentualEconomizado > 50) {
             intervalos.add(percentualEconomizado);
         }
+        if (percentualEconomizado < 0) {
+            graficoGaugeReceitasDepesas.setMin(-30);
+        }
         graficoGaugeReceitasDepesas = new MeterGaugeChartModel(
                 percentualEconomizado, intervalos);
         graficoGaugeReceitasDepesas.setSeriesColors("FF0000, FFFF00, 00CC00");
-        String titulo = "Percentual economizado das receitas";
+        String titulo = "Economia (" + percentualEconomizado + "%)";
         graficoGaugeReceitasDepesas.setTitle(titulo);
         graficoGaugeReceitasDepesas.setGaugeLabel("%");
+        graficoGaugeReceitasDepesas.setExtender("fnGraficoGaugeReceitasDespesas");
 
     }
 
@@ -416,6 +425,8 @@ public class ControladorRelatorio extends ControladorGenerico {
 
     public void initGraficoDeLinhasConsumoEletricidade() {
         // 1
+        graficoDeLinhasConsumoEletricidade = new LineChartModel();
+        // 2
         LineChartSeries serie = new LineChartSeries();
         serie.set("2013-07-01", 133);
         serie.set("2013-08-01", 123);
@@ -430,24 +441,22 @@ public class ControladorRelatorio extends ControladorGenerico {
         serie.set("2014-05-01", 157);
         serie.set("2014-06-01", 98);
         serie.set("2014-07-01", 145);
-        // 2
-        graficoDeLinhasConsumoEletricidade = new LineChartModel();
+        // 3
         String titulo = "Consumo de eletricidade (kWh)";
         graficoDeLinhasConsumoEletricidade.setTitle(titulo);
-        graficoDeLinhasConsumoEletricidade.addSeries(serie);
-        // 3
         graficoDeLinhasConsumoEletricidade.getAxis(AxisType.Y).setMin(0);
         // 4
+        graficoDeLinhasConsumoEletricidade.addSeries(serie);
+        // 5
         DateAxis eixoData = new DateAxis();
         eixoData.setTickFormat("%m/%Y");
         eixoData.setTickInterval("1 month");
         eixoData.setMin("2013-06-01");
         eixoData.setTickAngle(-60);
-        // 5
         graficoDeLinhasConsumoEletricidade.getAxes().put(AxisType.X, eixoData);
         // 6
         graficoDeLinhasConsumoEletricidade
-                .setExtender("fnDeLinhasGraficoConsumoEletricidade");
+                .setExtender("fnGraficoDeLinhasConsumoEletricidade");
     }
 
     public void setProdutos(List<Produto> produtos) {
@@ -516,7 +525,7 @@ public class ControladorRelatorio extends ControladorGenerico {
         return graficoDeLinhasConsumoEletricidade;
     }
 
-    public CartesianChartModel getGraficoDeBarrasReceitasDepesasBarras() {
+    public CartesianChartModel getGraficoDeBarrasReceitasDepesas() {
         return graficoDeBarrasReceitasDepesas;
     }
 

@@ -13,7 +13,7 @@
 
 	<f:metadata>
 		<f:event
-			listener="#{controladorRelatorio.initGraficoReceitasDespesasGauge()}"
+			listener="#{controladorRelatorio.initGraficoGaugeReceitasDespesas()}"
 			type="preRenderView" />
 	</f:metadata>
 
@@ -23,22 +23,22 @@
 			<p:messages id="messages" />
 
 			<p:spacer height="3px" />
-			
+
 			<p:panelGrid columns="1" style="width: 100%;">
 				<p:panelGrid columns="3">
 					<p:outputLabel value="Data (yyyy-MM)" />
-					<p:inputText value="#{controladorRelatorio.anoMesReferencia}"
+					<p:inputText value="#{controladorRelatorio.mesAnoReferencia}"
 						label="Ano-Mês" required="true"
-						requiredMessage="Preencha em formato yyyy-MM" />
+						requiredMessage="Preencha em formato mm/aaaa" />
 					<p:commandButton value="Atualizar"
-						actionListener="#{controladorRelatorio.initGraficoReceitasDespesasGauge()}"
+						actionListener="#{controladorRelatorio.initGraficoGaugeReceitasDespesas()}"
 						update="pnlGrafico, messages" />
 				</p:panelGrid>
 
 				<p:panelGrid columns="1" id="pnlGrafico">
 					<p:chart type="metergauge" style="width: 800px;"
 						id="graficoReceitasDepesasGauge"
-						model="#{controladorRelatorio.graficoReceitasDepesasGauge}" />
+						model="#{controladorRelatorio.graficoGaugeReceitasDepesas}" />
 
 				</p:panelGrid>
 
