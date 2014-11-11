@@ -31,9 +31,14 @@
       	this.cfg.showMarker = true;
       	this.cfg.highlighter = {useAxesFormatters: false, tooltipAxes: 'x'};
       	//this.cfg.seriesDefaults.fill = true;
+      	this.cfg.seriesDefaults.shadowAngle = -45;
+      	this.cfg.seriesDefaults.shadowAlpha = 0.01;
+      	this.cfg.seriesDefaults.shadowOffset = 2.50;
+      	this.cfg.seriesDefaults.shadowDepth = 5;
       	this.cfg.title = 'Receitas X Despesas';
       	this.cfg.axes.yaxis.min = 0;
       	this.cfg.legend.placement = 'outside';
+      	this.cfg.animate = true;
  	}
 	
 	function fnGraficoDeBarrasReceitasDespesas() {

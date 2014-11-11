@@ -9,8 +9,11 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui">
 
+
+<!-- 1 -->
 <ui:composition template="comum/template-relatorio.xhtml">
 
+	<!-- 2 -->
 	<f:metadata>
 		<f:event
 			listener="#{controladorRelatorio.initGraficoDeLinhasConsumoEletricidade()}"
@@ -23,6 +26,7 @@
 
 			<p:spacer height="3px" />
 
+			<!-- 3 -->
 			<p:chart type="line"
 				model="#{controladorRelatorio.graficoDeLinhasConsumoEletricidade}"
 				style="width:800px;" />

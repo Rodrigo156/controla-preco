@@ -217,6 +217,7 @@ public class ControladorRelatorio extends ControladorGenerico {
         graficoDeLinhasReceitasDepesas.addSeries(serieDespesas);
         graficoDeLinhasReceitasDepesas.addSeries(serieReceitas);
         graficoDeLinhasReceitasDepesas.setLegendPosition("ne");
+        graficoDeLinhasReceitasDepesas.setShadow(true);
         graficoDeLinhasReceitasDepesas
                 .setExtender("fnGraficoDeLinhasReceitasDespesas");
     }
@@ -451,7 +452,8 @@ public class ControladorRelatorio extends ControladorGenerico {
         DateAxis eixoData = new DateAxis();
         eixoData.setTickFormat("%m/%Y");
         eixoData.setTickInterval("1 month");
-        eixoData.setMin("2013-06-01");
+//        eixoData.setMin("2013-06-01");
+        eixoData.setMax("2014-07-01");
         eixoData.setTickAngle(-60);
         graficoDeLinhasConsumoEletricidade.getAxes().put(AxisType.X, eixoData);
         // 6
