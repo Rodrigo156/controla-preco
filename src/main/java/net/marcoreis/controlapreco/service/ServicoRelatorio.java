@@ -17,7 +17,7 @@ public class ServicoRelatorio extends ServicoGenerico {
 
     public List<String> findMesesDisponiveis() {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
-        String sQuery = "select distinct date_format(data, '%m/%Y') from Compra";
+        String sQuery = "select distinct date_format(data, '%m/%Y') from Compra order by data desc";
         Query query = em.createNativeQuery(sQuery);
         List resultado = query.getResultList();
         em.close();

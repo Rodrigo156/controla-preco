@@ -61,6 +61,7 @@ public class ControladorRelatorio extends ControladorGenerico {
     public void init() {
         mesAnoReferencia = sdfMesAno
                 .format(new Date(System.currentTimeMillis()));
+        mesesDisponiveis = getServico().findMesesDisponiveis();
     }
 
     public void initGraficoDeLinhasHistoricoPrecoProduto() {
@@ -261,7 +262,8 @@ public class ControladorRelatorio extends ControladorGenerico {
         String titulo = "Economia (" + percentualEconomizado + "%)";
         graficoGaugeReceitasDepesas.setTitle(titulo);
         graficoGaugeReceitasDepesas.setGaugeLabel("%");
-        graficoGaugeReceitasDepesas.setExtender("fnGraficoGaugeReceitasDespesas");
+        graficoGaugeReceitasDepesas
+                .setExtender("fnGraficoGaugeReceitasDespesas");
 
     }
 
@@ -452,7 +454,7 @@ public class ControladorRelatorio extends ControladorGenerico {
         DateAxis eixoData = new DateAxis();
         eixoData.setTickFormat("%m/%Y");
         eixoData.setTickInterval("1 month");
-//        eixoData.setMin("2013-06-01");
+        // eixoData.setMin("2013-06-01");
         eixoData.setMax("2014-07-01");
         eixoData.setTickAngle(-60);
         graficoDeLinhasConsumoEletricidade.getAxes().put(AxisType.X, eixoData);

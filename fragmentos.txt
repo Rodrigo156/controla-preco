@@ -26,3 +26,168 @@ http://www.minhaseconomias.com.br/como-funciona/planejamento-financeiro-pessoal
 
 http://demos.jquerymobile.com/1.1.2/docs/buttons/buttons-icons.html
 
+
+
+$(function() {
+            GerarGrafico();
+        });
+        
+        function GerarGrafico() {
+            data = [14.89,15.24,16.32,14.86,14.29,16.87,16.26,15.87,16.38,15.89,16.46,15.65,16.78,17.07,15.06,17.93,17.57,17.52,18.45,17.94,16.67,17.47,17.54,17.12,17.14,16.67,17.71,18.12,18.54,18.89,18.47,17.35,17.42,18.75,17.92,17.6,18.54,18.59,18.8,20,18.75,18.23,18.47,19.07,19.05,18,18.48,18.63];
+            names = ["11/10","12/10","1/11","2/11","3/11","4/11","5/11","6/11","7/11","8/11","9/11","10/11","11/11","12/11","1/12","2/12","3/12","4/12","5/12","6/12","7/12","8/12","9/12","10/12","11/12","12/12","1/13","2/13","3/13","4/13","5/13","6/13","7/13","8/13","9/13","10/13","11/13","12/13","1/14","2/14","3/14","4/14","5/14","6/14","7/14","8/14","9/14","10/14"];
+
+            $('#divEstatistica').highcharts({
+                chart: {
+                    font: 'arial',
+                    zoomType: "x"
+                },
+                title: {
+                    text: '',
+                    x: -20
+                },
+
+                xAxis: {
+                    gridLineWidth: 1,
+                    gridLineDashStyle: 'longdash',
+                    labels: {
+                        formatter: function() {
+                            var valor = names[this.value];
+                            return formatarData(valor);
+                        }
+                    }
+                },
+                yAxis: {
+                    gridLineWidth: 1,
+                    gridLineDashStyle: 'longdash',
+                    labels: {
+                        formatter: function() {
+                            var valor = this.value;
+                            return formatarValor(valor);
+
+                        }
+                    },
+                    type: 'linear',
+                    title: {
+                        text: ''
+                    }
+                },
+                credits: {
+                    enabled: false
+                },
+                rangeSelector: {
+                    selected: 1
+                },
+                tooltip: {
+                    valuePrefix: 'R$ ',
+                    shared: true,
+                    crosshairs: true,
+                    formatter: function() {
+
+                        return "<b><span style=\"color:#2880da;\">" + "Mediana - " + formatarDataTooltip(this.x) + "</span></b><br />" +
+                            "<b>Médio:</b> " + formatarValor(this.y) + "<br />" +
+                            "<b>Variação: </b> " + calcularValorizacao(this.points[0]) + "<br />" +
+                            "<b>Amostra: </b> " + pegarAmostra(this.points[0]) + "<br />";
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    border: 1,
+                    enabled: false                   
+                },
+                series: [{
+                    type: 'line',
+                    name: "Aluguel",
+                    data: data
+        }]
+        });
+
+    }
+        
+
+    function formatarDataTooltip(dataAtual) {
+
+        var valor = names[dataAtual];
+        dataAtual =  valor;
+            
+        var arrayMes = new Array("", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez");
+
+        var dataFormatada = arrayMes[parseInt(dataAtual.substring(0, 2))];
+        dataFormatada += "/20" + dataAtual.substring(dataAtual.indexOf('/') + 1, 5);
+        return dataFormatada;
+    }
+
+    function formatarData(dataAtual) {
+
+        if (dataAtual) {
+            var arrayMes = new Array("", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez");
+
+            var dataFormatada = arrayMes[parseInt(dataAtual.substring(0, 2))];
+            dataFormatada += "<br />" + dataAtual.substring(dataAtual.indexOf('/') + 1, 5);
+            return dataFormatada;
+        }
+
+        return " ";
+    }
+
+    function formatarValor(valor) {
+        var valorFormatado = formatReal(valor);
+        return "R$ " + valorFormatado;
+    }
+    
+    function formatReal(mixed) {
+        var valor = parseInt(mixed.toFixed(2).toString().replace(/[^\d]+/g, ''));
+        var tmp = valor + '';
+        tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+        if (tmp.length > 6)
+            tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+
+        return tmp;
+    }
+    
+    function pegarIndice(data) {
+
+        var listaDatas = names;
+        var dataAtual = names[data.x];
+
+        for (var counter = 0; counter < listaDatas.length; counter++)
+            if (listaDatas[counter] == dataAtual)
+                return counter;
+
+        return -1;
+    }
+            
+    function formatarPercent(valor) {
+        var index = valor.toString().indexOf('.');
+
+        if (index != -1)
+            return valor.toString().substring(0, index + 3) + "%";
+
+        return valor;
+    }
+            
+            
+    function calcularValorizacao(data) {
+
+        var index = pegarIndice(data);
+        var listaValores = data.series.yData;
+
+        var valorAtual = data.y;
+        var valorizacao = 0;
+        var valorAnterior = 0;
+
+        if (index > 0) {
+            valorAnterior = listaValores[index - 1];
+            valorizacao = (valorAtual / (valorAnterior / 100)) - 100;
+        }
+        return formatarPercent(valorizacao);
+    }
+            
+            
+    function pegarAmostra(data) {
+        var amostraArray = [24,14,21,20,18,19,14,13,16,21,15,18,13,27,26,16,21,14,23,20,36,26,30,44,33,28,49,38,39,56,44,37,47,41,52,60,110,110,96,85,98,92,95,92,85,84,90,91];
+            var index = pegarIndice(data);
+            return amostraArray[index];
+        }   
+        

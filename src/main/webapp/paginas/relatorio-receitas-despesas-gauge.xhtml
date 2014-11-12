@@ -26,10 +26,13 @@
 
 			<p:panelGrid columns="1" style="width: 100%;">
 				<p:panelGrid columns="3">
-					<p:outputLabel value="Data (yyyy-MM)" />
-					<p:inputText value="#{controladorRelatorio.mesAnoReferencia}"
-						label="Ano-Mês" required="true"
-						requiredMessage="Preencha em formato mm/aaaa" />
+					<p:outputLabel value="Data" />
+					<p:selectOneMenu value="#{controladorRelatorio.mesAnoReferencia}"
+						label="Mês/Ano" required="true">
+						<f:selectItems value="#{controladorRelatorio.mesesDisponiveis}" />
+						<p:ajax update="pnlGrafico, messages" event="change"
+							listener="#{controladorRelatorio.initGraficoGaugeReceitasDespesas()}" />
+					</p:selectOneMenu>
 					<p:commandButton value="Atualizar"
 						actionListener="#{controladorRelatorio.initGraficoGaugeReceitasDespesas()}"
 						update="pnlGrafico, messages" />
