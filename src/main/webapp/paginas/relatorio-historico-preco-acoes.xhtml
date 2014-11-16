@@ -13,10 +13,7 @@
 
 	<f:metadata>
 		<f:event
-			listener="#{controladorRelatorio.initGraficoDeBarrasGastosMensais()}"
-			type="preRenderView" />
-		<f:event
-			listener="#{controladorRelatorio.initGraficoDeLinhasGastosMensais()}"
+			listener="#{controladorRelatorio.initGraficoOhlcHistoricoPrecoAcoes()}"
 			type="preRenderView" />
 	</f:metadata>
 
@@ -27,16 +24,13 @@
 
 			<p:spacer height="3px" />
 
-			<p:tabView>
-				<p:tab title="Gráfico de barras">
-					<p:chart type="bar" style="width: 800px; "
-						model="#{controladorRelatorio.graficoDeBarrasGastosMensais}" />
-				</p:tab>
-				<p:tab title="Gráfico de linhas">
-					<p:chart type="line" style="width: 800px;" 
-						model="#{controladorRelatorio.graficoDeLinhasGastosMensais}" />
-				</p:tab>
-			</p:tabView>
+			<p:outputLabel for="german" value="German:" />
+			<p:calendar id="german" value="#{calendarView.date5}" locale="pt_BR"
+				navigator="true" pattern="dd/MM/yyyy" />
+
+
+			<p:chart type="bar" style="width: 800px; "
+				model="#{controladorRelatorio.graficoDeBarrasGastosMensais}" />
 
 
 		</h:form>

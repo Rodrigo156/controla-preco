@@ -13,7 +13,7 @@
 
 	<f:metadata>
 		<f:event
-			listener="#{controladorRelatorio.atualizarGraficosDeGastosPorCategoria()}"
+			listener="#{controladorRelatorio.initGraficoDeBolhasGastosMensaisPorCategoria()}"
 			type="preRenderView" />
 	</f:metadata>
 
@@ -29,31 +29,14 @@
 					label="Mês/Ano" required="true">
 					<f:selectItems value="#{controladorRelatorio.mesesDisponiveis}" />
 					<p:ajax update="graficos, messages" event="change"
-						listener="#{controladorRelatorio.atualizarGraficosDeGastosPorCategoria()}" />
+						listener="#{controladorRelatorio.initGraficoDeBolhasGastosMensaisPorCategoria()}" />
 				</p:selectOneMenu>
 			</p:panelGrid>
 
 			<p:spacer height="3px" />
 
-			<p:tabView id="graficos">
-				<p:tab title="Gráfico de pizza">
-					<p:chart type="pie" id="graficoDePizzaGastosPorCategoria"
-						style="width:600px;margin:auto;"
-						model="#{controladorRelatorio.graficoDePizzaGastosPorCategoria}" />
-				</p:tab>
-				<p:tab title="Gráfico de barras verticais">
-					<p:chart type="bar" id="graficoDeBarrasVerticaisGastosPorCategoria"
-						style="margin:auto;"
-						model="#{controladorRelatorio.graficoDeBarrasVerticaisGastosPorCategoria}" />
-				</p:tab>
-				<p:tab title="Gráfico de barras horizontais">
-					<p:chart type="bar" style="height:600px;margin:auto;"
-						id="graficoDeBarrasHorizontaisGastosPorCategoria"
-						model="#{controladorRelatorio.graficoDeBarrasHorizontaisGastosPorCategoria}" />
-				</p:tab>
-			</p:tabView>
-
-
+			<p:chart type="bubble" style="margin:auto;width:800px;height:500px;" id="graficos"
+				model="#{controladorRelatorio.graficoDeBolhasGastosMensaisPorCategoria}" />
 
 		</h:form>
 

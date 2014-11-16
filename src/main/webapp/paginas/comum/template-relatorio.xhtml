@@ -27,50 +27,61 @@
 	}
 	
 	function fnGraficoDeLinhasReceitasDespesas() {
-      	this.cfg.captureRightClick = true;
-      	this.cfg.showMarker = true;
-      	this.cfg.highlighter = {useAxesFormatters: false, tooltipAxes: 'x'};
-      	//this.cfg.seriesDefaults.fill = true;
-      	this.cfg.seriesDefaults.shadowAngle = -45;
-      	this.cfg.seriesDefaults.shadowAlpha = 0.01;
-      	this.cfg.seriesDefaults.shadowOffset = 2.50;
-      	this.cfg.seriesDefaults.shadowDepth = 5;
+      	this.cfg.seriesDefaults.shadow = false;
+      	this.cfg.seriesDefaults.linePattern = 'dotted';
       	this.cfg.title = 'Receitas X Despesas';
-      	this.cfg.axes.yaxis.min = 0;
       	this.cfg.legend.placement = 'outside';
       	this.cfg.animate = true;
+      	this.cfg.highlighter.crosshairs = true;
+      	this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
+      	this.cfg.cursor = { show: true, tooltipLocation:'ne'};
+      	//
+	    this.cfg.axes.yaxis.tickOptions.formatString = '%\'.2f';
+      	this.cfg.axes.yaxis.min = 0;
+
+        this.cfg.highlighter = {
+          show: true,
+          sizeAdjust: 5,
+          tooltipContentEditor: function(str, seriesIndex, pointIndex, plot) {
+            
+            var data = plot.data[seriesIndex][pointIndex][0];
+            var valor = plot.data[seriesIndex][pointIndex][1];
+            var valorFormatado = formatarValorMonetario(valor);
+            var saldo = plot.series[1].data[pointIndex][1] - plot.series[0].data[pointIndex][1];
+ 			var saldoFormatado = formatarValorMonetario(saldo);
+ 			
+            var html = '<div>
+			<b>Data: </b>'; html += data; html += '<br /> <b>Valor: </b>R$ ';
+			html += valorFormatado; html += '<br /> <b>Saldo: </b> '; if(saldo >
+			0) { html += '<span style='color: blue;'>R$ ' + saldoFormatado
+				+ '</span>'; } else { html += '<span style='color: red;'>R$ ' +
+				saldoFormatado + '</span>'; } html += '
+		</div>';
+
+            return html;
+            
+          }
+        };
  	}
 	
 	function fnGraficoDeBarrasReceitasDespesas() {
-      	//this.cfg.captureRightClick = true;
       	this.cfg.showMarker = false;
-      	//this.cfg.highlighter = {useAxesFormatters: false, tooltipAxes: 'x'};
-      	//this.cfg.axes.yaxis.min = 0;
-      	//this.cfg.legend.placement = 'outside';
-      	//this.cfg.seriesDefaults.pointLabels.stackedValue = true;
       	this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
       	this.cfg.stackSeries = true;
-      	this.cfg.axes.yaxis.tickOptions.formatString = '%\'.2f';
+      	this.cfg.axes.yaxis.tickOptions.formatString = 'R$ %\'.2f';
+      	this.cfg.highlighter.tooltipAxes = 'y';
  	}
 	
     function fnGraficoDeLinhasHistoricoPrecos() {  
     	this.cfg.legend.placement = 'outsideGrid';
+    	this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
     }
     
     function fnGraficoDeLinhasGastosMensais() {  
-	    //this.cfg.seriesDefaults.rendererOptions.varyBarColor = true;
-	    //this.cfg.seriesColors = ['#00749F', '#73C774', '#C7754C', '#17BDB8'];
-	    //this.cfg.axes.xaxis.renderer = $.jqplot.DateAxisRenderer;
-	    //this.cfg.axes.xaxis.min = '2014-05-01'
-	    //this.cfg.axes.xaxis.tickOptions.formatString = '%m/%Y';
-	    //this.cfg.axes.xaxis.tickInterval = '1 month';
-	    //this.cfg.axes.xaxis.tickAngle = -60;
-	    //this.cfg.stackSeries = true;
-	    //this.cfg.seriesDefaults.fill = true;
-    
-   		this.cfg.axes.yaxis.min = 0;
+        this.cfg.axes.yaxis.tickOptions.formatString = '%\'.2f';
     	this.cfg.captureRightClick = true;
     	this.cfg.seriesDefaults.rendererOptions.smooth = true;
+    	this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
     } 
 
     function fnGraficoDeBarrasGastosMensais() {  
@@ -83,12 +94,29 @@
     
     function fnGraficoDeLinhasConsumoEletricidade() {
 	    this.cfg.seriesDefaults.rendererOptions.smooth = true;
+	    this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
+	    this.cfg.axes.xaxis.tickOptions.angle = -45;
+    }
+
+
+    function fnGraficoDeBolhasGastosMensaisPorCategoria() {
+        this.cfg.axes.yaxis.tickOptions.formatString = 'R$ %\'.2f';
+        this.cfg.highlighter.tooltipAxes = 'y';
     }
     
     function fnGraficoGaugeReceitasDespesas() {
     }
 
-
+    function formatarValorMonetario(valor) {
+      var int = parseInt(valor.toFixed(2).toString().replace(/[^\d]+/g, ''));
+      var tmp = int + '';
+      tmp = tmp.replace(/([0-9]{2})$/g, ",$1");
+      if (tmp.length > 6)
+        tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+     
+      return tmp;
+    }
+    
 </h:outputScript>
 
 	<link href="${ctx}/paginas/comum/estilo/geral.css" type="text/css"
@@ -97,7 +125,7 @@
 
 </h:head>
 
-<h:body>
+<h:body style="margin:0px;">
 	<f:view>
 
 		<div id="header">
@@ -121,6 +149,9 @@
 					<li><a class="linkEsquerdo"
 						href="relatorio-gastos-categoria.faces">Gastos por categoria</a></li>
 					<li><a class="linkEsquerdo"
+						href="relatorio-gastos-mensais-categoria.faces">Gastos mensais
+							por categoria</a></li>
+					<li><a class="linkEsquerdo"
 						href="relatorio-historico-preco-produto.faces">Histórico de
 							preço</a></li>
 					<li><a class="linkEsquerdo"
@@ -128,12 +159,12 @@
 					<li><a class="linkEsquerdo"
 						href="relatorio-receitas-despesas-gauge.faces">Receitas /
 							despesas</a></li>
-					<li><a class="linkEsquerdo" href="">OHLC</a></li>
+					<li><a class="linkEsquerdo"
+						href="relatorio-gastos-mensais.faces">Preço de ações</a></li>
 					<li><a class="linkEsquerdo" href="">Candlestick</a></li>
 					<li><a class="linkEsquerdo" href="">Donut</a></li>
 					<li><a class="linkEsquerdo" href="">Master/detail</a></li>
 					<li><a class="linkEsquerdo" href="">Tempo real</a></li>
-					<li><a class="linkEsquerdo" href="">Bolhas</a></li>
 				</ul>
 			</div>
 

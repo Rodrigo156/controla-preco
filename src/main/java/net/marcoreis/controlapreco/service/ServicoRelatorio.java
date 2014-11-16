@@ -1,5 +1,9 @@
 package net.marcoreis.controlapreco.service;
 
+import java.io.InputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,8 +11,13 @@ import javax.persistence.Query;
 
 import net.marcoreis.controlapreco.entidades.Produto;
 import net.marcoreis.controlapreco.util.JPAUtil;
+import net.marcoreis.controlapreco.vo.AcaoVO;
 
+import org.apache.commons.codec.net.URLCodec;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 
 public class ServicoRelatorio extends ServicoGenerico {
 
@@ -35,13 +44,8 @@ public class ServicoRelatorio extends ServicoGenerico {
         return resultado;
     }
 
-    public List<Object[]> consultarHistorioPrecoProduto() {
-        EntityManager em = JPAUtil.getInstance().getEntityManager();
-        String sql = "select date_format(data, '%m/%Y') as mesReferencia, sum(valorTotal) as total from Compra group by date_format(data, '%m/%Y') order by date_format(data, '%m/%Y')";
-        Query query = em.createQuery(sql);
-        List<Object[]> resultado = query.getResultList();
-        em.close();
-        return resultado;
+    public List<Object[]> consultarGastosPorCategoria(String mesAnoReferencia) {
+        return consultarGastosPorCategoria(mesAnoReferencia, "data desc");
     }
 
     public List<Object[]> consultarGastosPorCategoria(String mesAnoReferencia,
@@ -57,27 +61,6 @@ public class ServicoRelatorio extends ServicoGenerico {
         sql.append("order by " + campoOrdenacao);
         Query query = em.createNativeQuery(sql.toString());
         query.setParameter("mesAnoReferencia", mesAnoReferencia);
-        List<Object[]> resultado = query.getResultList();
-        em.close();
-        return resultado;
-    }
-
-    public List<Object[]> consultarHistoricoPrecoProduto(List<Produto> produtos) {
-        EntityManager em = JPAUtil.getInstance().getEntityManager();
-        StringBuilder sql = new StringBuilder();
-        sql.append("select p.nome, avg(ic.valorUnitario) as precoMedio, date_format(data, '%m/%Y') as mesReferencia ");
-        sql.append("from ItemCompra ic  ");
-        sql.append("inner join Compra c on ic.compra_id = c.id ");
-        sql.append("inner join Produto p on p.id = ic.produto_id ");
-        if (produtos.size() > 0) {
-            sql.append("where produto_id in :produtos ");
-        }
-        sql.append("group by date_format(data, '%m/%Y'), p.nome ");
-        sql.append("order by date_format(data, '%m/%Y') ");
-        Query query = em.createNativeQuery(sql.toString());
-        if (produtos.size() > 0) {
-            query.setParameter("produtos", produtos);
-        }
         List<Object[]> resultado = query.getResultList();
         em.close();
         return resultado;
@@ -115,9 +98,10 @@ public class ServicoRelatorio extends ServicoGenerico {
     public Double consultarDespesasMes(String mesAnoReferencia) {
         EntityManager em = JPAUtil.getInstance().getEntityManager();
         StringBuilder sql = new StringBuilder();
-        sql.append("select ifnull(sum(ic.valorUnitario), 0) ");
-        sql.append("from ItemCompra ic  ");
-        sql.append("inner join Compra c on ic.compra_id = c.id ");
+        sql.append("select ifnull(sum(c.valorTotal), 0) ");
+        // sql.append("from ItemCompra ic  ");
+        // sql.append("inner join Compra c on ic.compra_id = c.id ");
+        sql.append("from Compra c ");
         sql.append("where date_format(data, '%m/%Y') = :mesAnoReferencia ");
         Query query = em.createNativeQuery(sql.toString());
         query.setParameter("mesAnoReferencia", mesAnoReferencia);
@@ -132,11 +116,52 @@ public class ServicoRelatorio extends ServicoGenerico {
         sql.append("select ifnull(sum(valor), 0) ");
         sql.append("from Movimentacao m ");
         sql.append("where date_format(data, '%m/%Y') = :mesAnoReferencia ");
+        sql.append(" AND tipo = 'RECEITA' ");
         Query query = em.createNativeQuery(sql.toString());
         query.setParameter("mesAnoReferencia", mesAnoReferencia);
         Double receitas = (Double) query.getSingleResult();
         em.close();
         return receitas;
+    }
+
+    public List<AcaoVO> consultarHistoricoPrecoAcoes(String simbolo,
+            Date dateInicio, Date dataFim) {
+        try {
+            StringBuilder urlServico = new StringBuilder();
+            urlServico.append("http://query.yahooapis.com/v1/public/yql?q=");
+            urlServico.append("select * from yahoo.finance.historicaldata ");
+            urlServico.append("where symbol=\"");
+            urlServico.append(simbolo);
+            urlServico.append("\" ");
+            urlServico.append("and startDate=\"");
+            urlServico.append(dateInicio);
+            urlServico.append("\" and endDate=\"");
+            urlServico.append(dataFim);
+            urlServico
+                    .append("\" &format=json&env=store://datatables.org/alltableswithkeys");
+            URL url = new URL(encodeUrl(urlServico.toString()));
+            //
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(url);
+            List<AcaoVO> lista = mapper.readValue(root.findValue("quote"),
+                    new TypeReference<List<AcaoVO>>() {
+                    });
+            return lista;
+        } catch (Exception e) {
+            logger.error(e);
+        }
+        return null;
+    }
+
+    public static String encodeUrl(String url) {
+        try {
+            return new URLCodec().encode(url, "UTF-8").replace("%3A", ":")
+                    .replace("%2F", "/").replace("%3F", "?")
+                    .replace("%3D", "=").replace("%26", "&");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
