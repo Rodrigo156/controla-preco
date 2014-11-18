@@ -24,25 +24,26 @@
 
 			<p:spacer height="3px" />
 
-			<p:panelGrid columns="1" style="width: 100%;">
-				<p:panelGrid columns="3" style="border: none;margin:auto;">
-					<p:outputLabel value="Data" />
-					<p:selectOneMenu value="#{controladorRelatorio.mesAnoReferencia}"
-						label="Mês/Ano" required="true">
-						<f:selectItems value="#{controladorRelatorio.mesesDisponiveis}" />
-						<p:ajax update="pnlGrafico, messages" event="change"
-							listener="#{controladorRelatorio.initGraficoGaugeReceitasDespesas()}" />
-					</p:selectOneMenu>
-				</p:panelGrid>
+			<p:panelGrid columns="3" style="margin:auto;" styleClass="semBorda">
+				<p:outputLabel value="Data" />
+				<p:selectOneMenu value="#{controladorRelatorio.mesAnoReferencia}"
+					label="Mês/Ano" required="true">
+					<f:selectItems value="#{controladorRelatorio.mesesDisponiveis}" />
+					<p:ajax update="pnlGrafico, messages" event="change"
+						listener="#{controladorRelatorio.initGraficoGaugeReceitasDespesas()}" />
+				</p:selectOneMenu>
+			</p:panelGrid>
 
-				<p:panelGrid columns="1" id="pnlGrafico">
-					<p:chart type="metergauge" style="width: 800px;"
-						id="graficoReceitasDepesasGauge"
-						model="#{controladorRelatorio.graficoGaugeReceitasDepesas}" />
+			<p:spacer height="3px" />
 
-				</p:panelGrid>
+			<p:panelGrid columns="1" id="pnlGrafico" style="margin:auto;"
+				styleClass="semBorda">
+				<p:chart type="metergauge" style="width: 800px;"
+					id="graficoReceitasDepesasGauge"
+					model="#{controladorRelatorio.graficoGaugeReceitasDepesas}" />
 
 			</p:panelGrid>
+
 		</h:form>
 
 	</ui:define>

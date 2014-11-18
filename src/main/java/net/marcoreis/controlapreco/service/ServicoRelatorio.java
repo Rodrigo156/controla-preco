@@ -1,9 +1,6 @@
 package net.marcoreis.controlapreco.service;
 
-import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -125,7 +122,7 @@ public class ServicoRelatorio extends ServicoGenerico {
     }
 
     public List<AcaoVO> consultarHistoricoPrecoAcoes(String simbolo,
-            Date dateInicio, Date dataFim) {
+            String dateInicio, String dataFim) {
         try {
             StringBuilder urlServico = new StringBuilder();
             urlServico.append("http://query.yahooapis.com/v1/public/yql?q=");

@@ -11,6 +11,7 @@
 
 <ui:composition template="comum/template-relatorio.xhtml">
 
+	<!-- 1 -->
 	<f:metadata>
 		<f:event
 			listener="#{controladorRelatorio.initGraficoDeBarrasGastosMensais()}"
@@ -29,11 +30,13 @@
 
 			<p:tabView>
 				<p:tab title="Gráfico de barras">
-					<p:chart type="bar" style="width: 800px; "
+					<!-- 2 -->
+					<p:chart type="bar" style="width: 800px; margin:auto;"
 						model="#{controladorRelatorio.graficoDeBarrasGastosMensais}" />
 				</p:tab>
 				<p:tab title="Gráfico de linhas">
-					<p:chart type="line" style="width: 800px;" 
+					<!-- 3 -->
+					<p:chart type="line" style="width: 800px; margin:auto;"
 						model="#{controladorRelatorio.graficoDeLinhasGastosMensais}" />
 				</p:tab>
 			</p:tabView>

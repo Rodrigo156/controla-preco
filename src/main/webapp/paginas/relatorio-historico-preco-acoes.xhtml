@@ -24,13 +24,30 @@
 
 			<p:spacer height="3px" />
 
-			<p:outputLabel for="german" value="German:" />
-			<p:calendar id="german" value="#{calendarView.date5}" locale="pt_BR"
-				navigator="true" pattern="dd/MM/yyyy" />
+			<p:panelGrid columns="2" style="margin:auto;" styleClass="semBorda">
+				<p:outputLabel value="Símbolo:" />
+				<p:inputText value="#{controladorRelatorio.simbolo}" />
 
+				<p:outputLabel value="Início:" />
+				<p:calendar value="#{controladorRelatorio.dataInicio}"
+					locale="pt_BR" pattern="dd/MM/yyyy" />
 
-			<p:chart type="bar" style="width: 800px; "
-				model="#{controladorRelatorio.graficoDeBarrasGastosMensais}" />
+				<p:outputLabel value="Fim:" />
+				<p:calendar value="#{controladorRelatorio.dataFim}" locale="pt_BR"
+					pattern="dd/MM/yyyy" />
+			</p:panelGrid>
+
+			<p:panelGrid columns="2" style="margin:auto;" styleClass="semBorda">
+				<p:commandButton value="Atualizar"
+					actionListener="#{controladorRelatorio.initGraficoOhlcHistoricoPrecoAcoes()}"
+					update="grafico" />
+			</p:panelGrid>
+
+			<p:spacer height="3px" />
+
+			<p:chart type="ohlc" style="width: 1000px; height:500px;"
+				id="grafico" rendered="#{not empty controladorRelatorio.dataInicio}"
+				model="#{controladorRelatorio.graficoOhlcHistoricoPrecoAcoes}" />
 
 
 		</h:form>

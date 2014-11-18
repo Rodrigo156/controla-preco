@@ -50,13 +50,17 @@
             var saldo = plot.series[1].data[pointIndex][1] - plot.series[0].data[pointIndex][1];
  			var saldoFormatado = formatarValorMonetario(saldo);
  			
-            var html = '<div>
-			<b>Data: </b>'; html += data; html += '<br /> <b>Valor: </b>R$ ';
-			html += valorFormatado; html += '<br /> <b>Saldo: </b> '; if(saldo >
-			0) { html += '<span style='color: blue;'>R$ ' + saldoFormatado
-				+ '</span>'; } else { html += '<span style='color: red;'>R$ ' +
-				saldoFormatado + '</span>'; } html += '
-		</div>';
+            var html = '<div><b>Data: </b>';
+            html += data; 
+            html += '<br /> <b>Valor: </b>R$ ';
+			html += valorFormatado; 
+			html += '<br /> <b>Saldo: </b> '; 
+			if(saldo > 0) { 
+			    html += '<span style='color: blue;'>R$ ' + saldoFormatado + '</span>'; 
+		    } else { 
+			    html += '<span style='color: red;'>R$ ' + saldoFormatado + '</span>'; 
+			} 
+			html += '</div>';
 
             return html;
             
@@ -64,10 +68,38 @@
         };
  	}
 	
+	function fnGraficoOhlcHistoricoPrecoAcoes() {
+		this.cfg.title = 'Histórico de preços das ações';
+	    this.cfg.axes.xaxis.renderer = $.jqplot.DateAxisRenderer;
+	    this.cfg.axes.xaxis.tickOptions.formatString = '%d/%m/%Y';
+	    this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
+	    this.cfg.axes.xaxis.tickOptions.angle = -90;
+	    this.cfg.seriesDefaults.rendererOptions.candleStick = true;
+      	this.cfg.axes.yaxis.tickOptions.formatString = 'US$ %\'.2f';
+      	this.cfg.highlighter.yvalues = 4;
+        this.cfg.highlighter.formatString = '<div> \
+        	<br /><b>Data:</b> %s \
+        	<br /><b>Open:</b> %s \
+        	<br /><b>Hi:</b> %s \
+        	<br /><b>Low:</b> %s \
+        	<br /><b>Close:</b> %s \
+        	</div>';
+    }
+    
 	function fnGraficoDeBarrasReceitasDespesas() {
+      	// 1
+      	this.cfg.highlighter.showMarker = false;
+      	// 2
+      	this.cfg.stackSeries = true;
+      	
+      	this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
+      	this.cfg.axes.yaxis.tickOptions.formatString = 'R$ %\'.2f';
+      	this.cfg.highlighter.tooltipAxes = 'y';
+ 	}
+	
+	function fnGraficoDeBarrasReceitasDespesasCombinado() {
       	this.cfg.showMarker = false;
       	this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
-      	this.cfg.stackSeries = true;
       	this.cfg.axes.yaxis.tickOptions.formatString = 'R$ %\'.2f';
       	this.cfg.highlighter.tooltipAxes = 'y';
  	}
@@ -78,18 +110,23 @@
     }
     
     function fnGraficoDeLinhasGastosMensais() {  
+	    this.cfg.highlighter.tooltipAxes = 'y';
         this.cfg.axes.yaxis.tickOptions.formatString = '%\'.2f';
-    	this.cfg.captureRightClick = true;
     	this.cfg.seriesDefaults.rendererOptions.smooth = true;
     	this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
     } 
 
     function fnGraficoDeBarrasGastosMensais() {  
+        // 1
+	    this.cfg.highlighter.tooltipAxes = 'y';
+        // 2	    
 	    this.cfg.axes.xaxis.tickOptions.labelPosition = 'middle';
+	    // 3
 	    this.cfg.axes.yaxis.tickOptions.formatString = '%\'.2f';
+	    // 4
 	    this.cfg.captureRightClick = true;
+		// 5
 		this.cfg.seriesDefaults.rendererOptions.varyBarColor = true;
-	    this.cfg.seriesDefaults.rendererOptions.smooth = true;
     } 
     
     function fnGraficoDeLinhasConsumoEletricidade() {
@@ -116,6 +153,7 @@
      
       return tmp;
     }
+
     
 </h:outputScript>
 
@@ -147,21 +185,22 @@
 					<li><a class="linkEsquerdo"
 						href="relatorio-gastos-mensais.faces">Gastos mensais</a></li>
 					<li><a class="linkEsquerdo"
-						href="relatorio-gastos-categoria.faces">Gastos por categoria</a></li>
-					<li><a class="linkEsquerdo"
 						href="relatorio-gastos-mensais-categoria.faces">Gastos mensais
 							por categoria</a></li>
+					<li><a class="linkEsquerdo"
+						href="relatorio-gastos-categoria.faces">Gastos por categoria</a></li>
 					<li><a class="linkEsquerdo"
 						href="relatorio-historico-preco-produto.faces">Histórico de
 							preço</a></li>
 					<li><a class="linkEsquerdo"
 						href="relatorio-receitas-despesas.faces">Receitas X despesas</a></li>
 					<li><a class="linkEsquerdo"
+						href="relatorio-receitas-despesas-combinado.faces">Receitas X despesas (combinado)</a></li>
+					<li><a class="linkEsquerdo"
 						href="relatorio-receitas-despesas-gauge.faces">Receitas /
 							despesas</a></li>
 					<li><a class="linkEsquerdo"
-						href="relatorio-gastos-mensais.faces">Preço de ações</a></li>
-					<li><a class="linkEsquerdo" href="">Candlestick</a></li>
+						href="relatorio-historico-preco-acoes.faces">Preço de ações</a></li>
 					<li><a class="linkEsquerdo" href="">Donut</a></li>
 					<li><a class="linkEsquerdo" href="">Master/detail</a></li>
 					<li><a class="linkEsquerdo" href="">Tempo real</a></li>

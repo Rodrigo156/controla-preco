@@ -23,7 +23,7 @@
 
 			<p:spacer height="3px" />
 
-			<p:panelGrid columns="3" style="margin:auto;">
+			<p:panelGrid columns="3" style="margin:auto;" styleClass="semBorda">
 				<p:outputLabel value="Data" />
 				<p:selectOneMenu value="#{controladorRelatorio.mesAnoReferencia}"
 					label="Mês/Ano" required="true">
@@ -35,7 +35,8 @@
 
 			<p:spacer height="3px" />
 
-			<p:chart type="bubble" style="margin:auto;width:800px;height:500px;" id="graficos"
+			<p:chart type="bubble" style="margin:auto;width:800px;height:500px;"
+				id="graficos"
 				model="#{controladorRelatorio.graficoDeBolhasGastosMensaisPorCategoria}" />
 
 		</h:form>
